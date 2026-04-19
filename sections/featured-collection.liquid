@@ -60,15 +60,16 @@
         scroll-snap-type: x mandatory;
         -webkit-overflow-scrolling: touch;
         scrollbar-width: none;
-        gap: 0 !important;
+        gap: 12px !important;
         background: transparent !important;
+        padding: 0 16px 0 16px !important;
       }
       #fc-list-{{ section.id }}::-webkit-scrollbar { display: none; }
       #fc-list-{{ section.id }} > li {
         flex: 0 0 72vw !important;
         max-width: 72vw !important;
         scroll-snap-align: start;
-        border-right: 1px solid var(--color-border);
+        border: none !important;
       }
       #fc-list-{{ section.id }} > li[aria-hidden="true"] { display: none !important; }
     }

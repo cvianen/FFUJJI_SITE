@@ -1,0 +1,338 @@
+<style>
+  .lookbook-block {
+    margin-bottom: 0.5rem;
+  }
+  .lookbook-header {
+    text-align: center;
+    padding: 3rem 0 2rem;
+  }
+  .lookbook-season {
+    display: block;
+    font-size: 0.7rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    opacity: 0.4;
+    margin-bottom: 0.75rem;
+  }
+  .lookbook-title {
+    font-size: 1rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-weight: normal;
+    opacity: 0.85;
+  }
+  .lookbook-image-full img {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: transform 0.6s ease;
+  }
+  .lookbook-image-full:hover img {
+    transform: scale(1.01);
+  }
+  .lookbook-image-pair {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    align-items: stretch;
+  }
+  .lookbook-image-pair .pair-wrap {
+    overflow: hidden;
+    aspect-ratio: 5 / 7;
+  }
+  .lookbook-image-pair .pair-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.6s ease;
+  }
+  .lookbook-image-pair .pair-wrap:hover img {
+    transform: scale(1.02);
+  }
+  .lookbook-video {
+    position: relative;
+    cursor: pointer;
+    overflow: hidden;
+  }
+  .lookbook-video__cover {
+    position: relative;
+  }
+  .lookbook-video__cover img {
+    width: 100%;
+    display: block;
+  }
+  .lookbook-video__play {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .lookbook-video__play-btn {
+    width: 56px;
+    height: 56px;
+    background: rgba(255,255,255,0.92);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s ease, background 0.2s ease;
+  }
+  .lookbook-video__cover:hover .lookbook-video__play-btn {
+    transform: scale(1.08);
+    background: white;
+  }
+  .lookbook-video__play-btn svg {
+    width: 18px;
+    height: 18px;
+    margin-left: 3px;
+    fill: black;
+  }
+  .lookbook-video iframe {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    display: block;
+    border: none;
+  }
+  .lookbook-video--cinema iframe {
+    aspect-ratio: 2.39 / 1;
+  }
+  [x-cloak] { display: none !important; }
+
+  @media (max-width: 640px) {
+    .lookbook-page-inner {
+      padding: 0 1.25rem;
+    }
+    .lookbook-block {
+      margin-bottom: 0.5rem;
+    }
+    .lookbook-image-pair {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+  }
+</style>
+
+<section class="lookbook-page section-x-padding" data-color-scheme="{{ section.settings.color_scheme }}" data-section-type="lookbook-page">
+  <div class="lookbook-page-inner" style="max-width: 1200px; margin: 0 auto;">
+
+    {%- for block in section.blocks -%}
+
+      {%- case block.type -%}
+
+        {%- when 'header' -%}
+          <div class="lookbook-header lookbook-block" {{ block.shopify_attributes }}>
+            {%- if block.settings.season != blank -%}
+              <span class="lookbook-season">{{ block.settings.season }}</span>
+            {%- endif -%}
+            {%- if block.settings.title != blank -%}
+              <h1 class="lookbook-title font-heading">{{ block.settings.title }}</h1>
+            {%- endif -%}
+          </div>
+
+        {%- when 'image_full' -%}
+          {%- if block.settings.image != blank -%}
+            <div class="lookbook-image-full lookbook-block" style="overflow: hidden;" {{ block.shopify_attributes }}>
+              <img
+                src="{{ block.settings.image | img_url: '1400x' }}"
+                srcset="{{ block.settings.image | img_url: '800x' }} 800w, {{ block.settings.image | img_url: '1400x' }} 1400w"
+                sizes="(min-width: 1200px) 1200px, 100vw"
+                alt="{{ block.settings.image.alt | escape }}"
+                loading="lazy"
+                width="{{ block.settings.image.width }}"
+                height="{{ block.settings.image.height }}"
+              >
+            </div>
+          {%- endif -%}
+
+        {%- when 'image_pair' -%}
+          <div class="lookbook-image-pair lookbook-block" {{ block.shopify_attributes }}>
+            {%- if block.settings.image_left != blank -%}
+              <div class="pair-wrap">
+                <img
+                  src="{{ block.settings.image_left | img_url: '800x' }}"
+                  srcset="{{ block.settings.image_left | img_url: '600x' }} 600w, {{ block.settings.image_left | img_url: '800x' }} 800w"
+                  sizes="(min-width: 640px) 50vw, 100vw"
+                  alt="{{ block.settings.image_left.alt | escape }}"
+                  loading="lazy"
+                  width="{{ block.settings.image_left.width }}"
+                  height="{{ block.settings.image_left.height }}"
+                >
+              </div>
+            {%- endif -%}
+            {%- if block.settings.image_right != blank -%}
+              <div class="pair-wrap">
+                <img
+                  src="{{ block.settings.image_right | img_url: '800x' }}"
+                  srcset="{{ block.settings.image_right | img_url: '600x' }} 600w, {{ block.settings.image_right | img_url: '800x' }} 800w"
+                  sizes="(min-width: 640px) 50vw, 100vw"
+                  alt="{{ block.settings.image_right.alt | escape }}"
+                  loading="lazy"
+                  width="{{ block.settings.image_right.width }}"
+                  height="{{ block.settings.image_right.height }}"
+                >
+              </div>
+            {%- endif -%}
+          </div>
+
+        {%- when 'video' -%}
+          {%- if block.settings.video_url != blank -%}
+            <div class="lookbook-video lookbook-block{% if block.settings.aspect_ratio == 'cinema' %} lookbook-video--cinema{% endif %}"
+                 x-data="{ playing: false }" {{ block.shopify_attributes }}>
+              {%- if block.settings.cover_image != blank -%}
+                <div class="lookbook-video__cover" x-show="!playing" @click="playing = true">
+                  <img
+                    src="{{ block.settings.cover_image | img_url: '1400x' }}"
+                    alt="Play video"
+                    style="width:100%; display:block;"
+                    loading="lazy"
+                  >
+                  <div class="lookbook-video__play">
+                    <div class="lookbook-video__play-btn">
+                      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M8 5v14l11-7z"/></svg>
+                    </div>
+                  </div>
+                </div>
+              {%- endif -%}
+              <div x-show="playing" x-cloak>
+                {%- if block.settings.video_url.type == 'youtube' -%}
+                  <iframe
+                    src="https://www.youtube.com/embed/{{ block.settings.video_url.id }}?autoplay=1&rel=0"
+                    allow="autoplay; fullscreen"
+                    loading="lazy">
+                  </iframe>
+                {%- elsif block.settings.video_url.type == 'vimeo' -%}
+                  <iframe
+                    src="https://player.vimeo.com/video/{{ block.settings.video_url.id }}?autoplay=1"
+                    allow="autoplay; fullscreen"
+                    loading="lazy">
+                  </iframe>
+                {%- endif -%}
+              </div>
+              {%- if block.settings.cover_image == blank -%}
+                {%- if block.settings.video_url.type == 'youtube' -%}
+                  <iframe
+                    src="https://www.youtube.com/embed/{{ block.settings.video_url.id }}?rel=0"
+                    allow="fullscreen"
+                    loading="lazy">
+                  </iframe>
+                {%- elsif block.settings.video_url.type == 'vimeo' -%}
+                  <iframe
+                    src="https://player.vimeo.com/video/{{ block.settings.video_url.id }}"
+                    allow="fullscreen"
+                    loading="lazy">
+                  </iframe>
+                {%- endif -%}
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+
+      {%- endcase -%}
+
+    {%- endfor -%}
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Lookbook page",
+  "settings": [
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "options": [
+        { "value": "primary", "label": "Primary" },
+        { "value": "secondary", "label": "Secondary" },
+        { "value": "tertiary", "label": "Tertiary" }
+      ],
+      "default": "primary"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "header",
+      "name": "Header",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "season",
+          "label": "Season label",
+          "info": "Small label above the title (e.g. FW23, SS25)",
+          "default": "FW23"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Collection title",
+          "default": "The Mountain Never Sleeps"
+        }
+      ]
+    },
+    {
+      "type": "image_full",
+      "name": "Full-width image",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        }
+      ]
+    },
+    {
+      "type": "image_pair",
+      "name": "Image pair",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image_left",
+          "label": "Left image"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_right",
+          "label": "Right image"
+        }
+      ]
+    },
+    {
+      "type": "video",
+      "name": "Video",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "video_url",
+          "id": "video_url",
+          "label": "Video URL",
+          "accept": ["youtube", "vimeo"]
+        },
+        {
+          "type": "image_picker",
+          "id": "cover_image",
+          "label": "Cover image",
+          "info": "Shown before the video plays. Click to play."
+        },
+        {
+          "type": "select",
+          "id": "aspect_ratio",
+          "label": "Aspect ratio",
+          "options": [
+            { "value": "widescreen", "label": "Widescreen (16:9)" },
+            { "value": "cinema", "label": "Cinema (2.39:1)" }
+          ],
+          "default": "widescreen"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Lookbook page"
+    }
+  ]
+}
+{% endschema %}

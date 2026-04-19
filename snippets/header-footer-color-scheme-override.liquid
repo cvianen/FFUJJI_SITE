@@ -1,0 +1,20 @@
+<style>
+html {
+  background-color: var(--color-{{ section_color }}-background);
+  color: var(--color-{{ section_color }}-text);
+}
+
+
+header[data-color-scheme="header"],
+section[data-color-scheme="header"],
+footer[data-color-scheme="footer"] {
+  --color-scheme-accent: var(--color-{{ section_color }}-accent);
+  --color-scheme-text: var(--color-{{ section_color }}-text);
+  --color-scheme-background: var(--color-{{ section_color }}-background);
+  --color-scheme-background-hex: var(--color-{{ section_color }}-background-hex);
+  --color-scheme-meta: var(--color-{{ section_color }}-meta);
+  --color-scheme-text--overlay: var(--color-{{ section_color }}-text--overlay);
+  --color-scheme-accent--overlay: var(--color-{{ section_color }}-accent--overlay);
+  --color-scheme-accent-placeholder: var(--color-{{ section_color }}-text-placeholder);
+}
+</style>

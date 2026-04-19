@@ -1,0 +1,32 @@
+{%- if block.settings.text_color == 'text' -%}
+  {% capture color_class %}text-scheme-text{% endcapture %}
+{%- else -%}
+  {% capture color_class %}text-scheme-meta{% endcapture %}
+{%- endif -%}
+<div class="mt-8 {{ color_class }}" {{ block.shopify_attributes }}>
+  {%- if block.settings.heading != '' -%}
+  <h2 class="font-heading {{ settings.base_heading_size }} mb-3">{{ block.settings.heading }}</h2>
+  {%- endif -%}
+  <ul class="product-icon-list-box {%- if block.settings.heading != '' -%} mt-4{%- endif -%}">
+    {%- for i in (1..8) -%}
+    {%- capture icon %}icon_{{ i }}{%- endcapture -%}
+    {%- capture text %}text_{{ i }}{%- endcapture -%}
+    {%- capture url_key %}url_{{ i }}{%- endcapture -%}
+    {%- liquid
+      assign icon = block.settings[icon]
+      assign text = block.settings[text]
+      assign url = block.settings[url_key]
+    -%}
+    {%- if text != '' -%}
+    <li class="flex items-center justify-start">
+      <span class="inline-block w-5 h-5 mr-3 flex-shrink-0">{% render 'product-icon', icon: icon %}</span>
+      {%- if url != blank -%}
+        <a href="{{ url }}" class="underline">{{ text }}</a>
+      {%- else -%}
+        <span>{{ text }}</span>
+      {%- endif -%}
+    </li>
+    {%- endif -%}
+    {%- endfor -%}
+  </ul>
+</div>

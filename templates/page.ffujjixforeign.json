@@ -1,0 +1,79 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "lookbook": {
+      "type": "lookbook-page",
+      "blocks": {
+        "header": {
+          "type": "header",
+          "settings": {
+            "season": "FW25",
+            "title": "FFUJJI x Foreign Vintage"
+          }
+        },
+        "full_1": {
+          "type": "image_full",
+          "settings": {
+            "image": "shopify://shop_images/DSC00679.jpg"
+          }
+        },
+        "pair_1": {
+          "type": "image_pair",
+          "settings": {
+            "image_left": "shopify://shop_images/DSC00795.jpg",
+            "image_right": "shopify://shop_images/DSC00605.jpg"
+          }
+        },
+        "full_2": {
+          "type": "image_full",
+          "settings": {
+            "image": "shopify://shop_images/DSC00740.jpg"
+          }
+        },
+        "pair_2": {
+          "type": "image_pair",
+          "settings": {
+            "image_left": "shopify://shop_images/DSC00644.jpg",
+            "image_right": "shopify://shop_images/DSC00729.jpg"
+          }
+        },
+        "full_3": {
+          "type": "image_full",
+          "settings": {
+            "image": "shopify://shop_images/DSC00653.jpg"
+          }
+        },
+        "pair_3": {
+          "type": "image_pair",
+          "settings": {
+            "image_left": "shopify://shop_images/DSC00656.jpg",
+            "image_right": "shopify://shop_images/DSC00700_6e5141fd-e84b-4ce3-8fa8-682ff71f237c.jpg"
+          }
+        }
+      },
+      "block_order": [
+        "header",
+        "full_1",
+        "pair_1",
+        "full_2",
+        "pair_2",
+        "full_3",
+        "pair_3"
+      ],
+      "settings": {
+        "color_scheme": "primary"
+      }
+    }
+  },
+  "order": [
+    "lookbook"
+  ]
+}

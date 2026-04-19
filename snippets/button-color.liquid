@@ -1,0 +1,17 @@
+{%- liquid
+  if button_color 
+    assign color = button_color 
+  else 
+    assign color = settings.button_color 
+  endif 
+-%}
+{%- case color -%}
+  {%- when 'text_background' -%}
+    bg-scheme-text text-scheme-text-overlay hover:bg-scheme-accent hover:text-scheme-accent-overlay border-scheme-text hover:border-scheme-accent border-text
+  {%- when 'accent_background' -%}
+    bg-scheme-accent text-scheme-accent-overlay hover:bg-scheme-text hover:text-scheme-text-overlay border-scheme-accent hover:border-scheme-text border-text
+  {%- when 'accent_background_text_border' -%}
+    bg-scheme-accent text-scheme-accent-overlay border-text border-scheme-text hover:bg-scheme-text hover:text-scheme-text-overlay
+  {%- when 'transparent_background_text_border' -%}
+    bg-transparent text-scheme-text border-text border-scheme-text hover:border-scheme-accent hover:text-scheme-accent
+{%- endcase -%}

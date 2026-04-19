@@ -1,0 +1,377 @@
+{%- liquid
+  assign section_color = 'footer'
+  assign locale_selector = false
+  assign country_selector = false
+  assign grid_cols = 12
+
+  if section.settings.show_country_selector and localization.available_countries.size > 1
+    assign country_selector = true
+  endif
+  if section.settings.show_locale_selector and shop.published_locales.size > 1
+    assign locale_selector = true
+  endif
+
+  assign show_grid_border = section.settings.show_grid_border
+  assign block_count = section.blocks.size | plus: 1
+  if section.settings.show_social
+    assign block_count = block_count | plus: 1
+  endif
+  if section.settings.text_text != blank
+    assign block_count = block_count | plus: 1
+  endif
+
+  case block_count
+    when 2
+      assign desktop_col_span = 'lg:col-span-6'
+    when 3
+      assign desktop_col_span = 'lg:col-span-4'
+    when 4
+      assign desktop_col_span = 'lg:col-span-3'
+    when 5
+      assign grid_cols = 10
+      assign desktop_col_span = 'lg:col-span-2'
+  endcase
+
+  assign desktop_grid_class = 'lg:grid-cols-' | append: grid_cols
+-%}
+
+<style>
+[data-color-scheme="footer"] {
+  --color-scheme-accent: var(--color-{{ section.settings.color_scheme }}-accent);
+  --color-scheme-text: var(--color-{{ section.settings.color_scheme }}-text);
+  --color-scheme-background: var(--color-{{ section.settings.color_scheme }}-background);
+  --color-scheme-background-hex: var(--color-{{ section.settings.color_scheme }}-background-hex);
+  --color-scheme-meta: var(--color-{{ section.settings.color_scheme }}-meta);
+  --color-scheme-text--overlay: var(--color-{{ section.settings.color_scheme }}-text--overlay);
+  --color-scheme-accent--overlay: var(--color-{{ section.settings.color_scheme }}-accent--overlay);
+  --color-scheme-accent-placeholder: var(--color-{{ section.settings.color_scheme }}-text-placeholder);
+}
+</style>
+
+<footer class="bg-scheme-background text-scheme-text" data-section-id="{{ section.id }}" data-section-type="footer" data-color-scheme="footer">
+  {% if section.settings.show_newsletter %}
+    {% render 'newsletter',
+      section_color: section.settings.newsletter_color_scheme,
+      text_size_class: 'text-base',
+      section_title: section.settings.newsletter_section_title,
+      subheading: section.settings.newsletter_subheading,
+      section_id: section.id
+    %}
+  {% endif %}
+  <div class="border-t-grid border-grid-color">
+    <div class="grid {{ desktop_grid_class }} bg-border {% if show_grid_border %}gap-gutter{% endif %%}">
+
+      {% comment %}
+      Footer logo
+      {% endcomment %}
+      <div class="{{ desktop_col_span }} section-x-padding py-theme bg-scheme-background text-scheme-text">
+        <div class="h1">
+          <a href="{{ routes.root_url }}" class="footer-logo-image break-words">
+            {% if section.settings.logo != blank %}
+              {% capture image_size %}{{ section.settings.logo_max_width }}x{% endcapture %}
+              <img src="{{ section.settings.logo | img_url: image_size }}"
+                  srcset="{{ section.settings.logo | img_url: image_size }} 1x, {{ section.settings.logo | img_url: image_size, scale: 2 }} 2x, {{ section.settings.logo | img_url: image_size, scale: 3 }} 3x"
+                  alt="{{ section.settings.logo.alt | default: shop.name }}">
+            {% else %}
+              {{ shop.name }}
+            {% endif %}
+          </a>
+        </div>
+      </div>
+      {% if section.settings.text_text != blank %}
+        <div class="{{ desktop_col_span }} section-x-padding py-theme bg-scheme-background text-scheme-text overflow-hidden">
+          {% if section.settings.text_heading != '' %}
+            <h2 class="font-heading text-base mb-4 break-words">{{ section.settings.text_heading }}</h2>
+          {% endif %}
+          <div class="rte">
+            {{ section.settings.text_text }}
+          </div>
+        </div>
+      {% endif %}
+
+      {% for block in section.blocks %}
+        {% if block.type == 'menu' %}
+          <div class="{{ desktop_col_span }} section-x-padding py-theme bg-scheme-background text-scheme-text {% unless show_grid_border %}lg:text-right{% endunless %}"  {{ block.shopify_attributes }}>
+            <div class="text-left inline-block">
+            {% assign link_list = block.settings.main_linklist %}
+            {% if block.settings.show_heading %}
+              <h2 class="font-heading text-base mb-4">{{ linklists[link_list].title }}</h2>
+            {% endif %}
+            <ul class="list-none space-y-1">
+              {% for link in linklists[link_list].links %}
+                <li>
+                  <a href="{{ link.url }}" class="hover:text-scheme-accent">
+                    {{ link.title }}
+                  </a>
+                </li>
+              {% endfor %}
+            </ul>
+            </div>
+          </div>
+        {% endif %}
+      {% endfor %}
+
+      {% if section.settings.show_social %}
+        {% assign social_style = settings.social_style %}
+        <div class="{{ desktop_col_span }} section-x-padding py-theme bg-scheme-background text-scheme-text {% unless show_grid_border %}lg:text-right{% endunless %}">
+          <div class="text-left inline-block">
+            {%- if section.settings.social_title != blank %}
+              <h2 class="font-heading text-base mb-4">{{ section.settings.social_title }}</h2>
+            {% endif %}
+            {% render 'social-icons' with social_style: social_style, link_class: "mb-1", section_color: section_color %}
+          </div>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="border-t-grid border-grid-color">
+    <div class="section-x-padding py-theme lg:flex lg:flex-wrap lg:items-center lg:justify-between">
+      <div class="mb-4 lg:mb-0 space-y-2 text-sm lg:flex-1">
+        <p>
+          &copy; {{ 'now' | date: "%Y" }}, {{ shop.name | link_to: routes.root_url }}.
+        </p>
+   
+      </div>
+      {% if section.settings.show_payment_icons %}
+        {% unless shop.enabled_payment_types == empty %}
+          <div class="mb-4 md:mb-0 md:w-auto lg:flex-1">
+            <h2 class="visually-hidden">{{ 'general.payment.method' | t }}</h2>
+            <ul class="-mx-1 -mb-2 lg:text-center">
+              {% for type in shop.enabled_payment_types %}
+                <li class="inline-block mx-1 mb-2 w-7">
+                  {{ type | payment_type_svg_tag: class: 'icon' }}
+                </li>
+              {% endfor %}
+            </ul>
+          </div>
+        {% endunless %}
+      {% endif %}
+      {%- if country_selector or locale_selector -%}
+        <div class="flex flex-wrap items-center justify-between lg:justify-end mb-4 lg:mb-0 lg:flex-1">
+          {%- form 'localization', data-disclosure-form: '' -%}
+            {%- if locale_selector -%}
+              <div class="inline-block {% if country_selector and locale_selector %}mr-4{% endif %}">
+                <h2 class="visually-hidden" id="lang-heading">
+                  {{ 'general.language.dropdown_label' | t }}
+                </h2>
+                <div class="relative" data-disclosure-locale>
+                  <button type="button" class="text-sm border-b-text border-scheme-text py-1" aria-expanded="false" aria-controls="lang-list" aria-describedby="lang-heading" data-disclosure-toggle>
+                    {{ form.current_locale.endonym_name }}
+                    <span class="inline-block ml-1 w-3 fill-current">
+                      {% render 'icon-chevron-down' %}
+                    </span>
+                  </button>
+                  <ul id="lang-List" class="disclosure-list absolute bg-scheme-background opacity-0 top-0 lg:left-auto lg:right-0 transform transition-opacity border-text border-theme-color py-2" data-disclosure-list inert>
+                    {% for locale in form.available_locales %}
+                      <li class="text-sm">
+                        <a class="block p-2" href="#" lang="{{ locale.iso_code }}" {% if locale.iso_code == form.current_locale.iso_code %}aria-current="true"{% endif %} data-value="{{ locale.iso_code }}" data-disclosure-option>
+                          <span class="{% if locale.iso_code == form.current_locale.iso_code %}border-scheme-text border-b-text{% else %}border-transparent border-b-text{% endif %}">{{ locale.endonym_name }}</span>
+                        </a>
+                      </li>
+                    {%- endfor -%}
+                  </ul>
+                  <input type="hidden" name="locale_code" id="LocaleSelector" value="{{ form.current_locale.iso_code }}" data-disclosure-input/>
+                </div>
+              </div>
+            {%- endif -%}
+            {%- if country_selector -%}
+              <div class="inline-block">
+                <h2 class="visually-hidden" id="country-heading">
+                  {{ 'general.country.dropdown_label' | t }}
+                </h2>
+                <div class="relative" data-disclosure-country>
+                  <button type="button" class="text-sm border-b-text border-scheme-text py-1" aria-expanded="false" aria-controls="country-list" aria-describedby="country-heading" data-disclosure-toggle>
+                    {{ localization.country.name }} ({{ localization.country.currency.iso_code }} {{ localization.country.currency.symbol }})
+                    <span class="inline-block ml-1 w-3 fill-current">
+                      {% render 'icon-chevron-down' %}
+                    </span>
+                  </button>
+                  <ul id="country-list" class="disclosure-list absolute bg-scheme-background opacity-0 top-0 left-0 lg:left-auto lg:right-0 transform transition-opacity border-text border-theme-color py-2" data-disclosure-list inert>
+                    {% for country in localization.available_countries %}
+                      <li class="text-sm w-40">
+                        <a class="block p-2" href="#" {% if country.iso_code == localization.country.iso_code %}aria-current="true"{% endif %} data-value="{{ country.iso_code }}" data-disclosure-option>
+                          <span class="{% if country.iso_code == localization.country.iso_code %}border-scheme-text border-b-text{% else %}border-transparent border-b-text{% endif %}">{{ country.name }} ({{ country.currency.iso_code }} {{ country.currency.symbol }})</span>
+                        </a>
+                      </li>
+                    {%- endfor -%}
+                  </ul>
+                  <input type="hidden" name="country_code" id="CountrySelector" value="{{ localization.country.iso_code }}" data-disclosure-input/>
+                </div>
+              </div>
+            {%- endif -%}
+          {%- endform -%}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</footer>
+
+
+{% if section.settings.logo != blank %}
+  <style>
+    .footer-logo-image {
+      display: block;
+      max-width: {{ section.settings.logo_max_width }}px;
+    }
+  </style>
+{% endif %}
+
+{% schema %}
+  {
+    "name": "Footer",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "logo",
+        "label": "Logo image"
+      },
+      {
+        "type": "range",
+        "id": "logo_max_width",
+        "min": 50,
+        "max": 250,
+        "step": 5,
+        "unit": "px",
+        "label": "Logo width",
+        "default": 100
+      },
+      {
+        "type": "checkbox",
+        "id": "show_payment_icons",
+        "label": "Show payment icons"
+      },
+      {
+        "type": "header",
+        "content": "Language Selector",
+        "info": "To add a language, go to your [language settings.](/admin/settings/languages)"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_locale_selector",
+        "label": "Show language selector",
+        "default": true
+      },
+      {
+        "type": "header",
+        "content": "Country/region selector",
+        "info": "To add a country/region, go to your [payment settings.](/admin/settings/payments)"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_country_selector",
+        "label": "Show country/region selector",
+        "default": true
+      },
+      {
+        "type": "header",
+        "content": "Text"
+      },
+      {
+        "type": "text",
+        "id": "text_heading",
+        "label": "Heading"
+      },
+      {
+        "id": "text_text",
+        "type": "richtext",
+        "label": "Text",
+        "default": "<p>Use this to add additional information about your store, e.g. address / contact details.</p>"
+      },
+      {
+        "type": "header",
+        "content": "Social"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_social",
+        "label": "Show social media"
+      },
+      {
+        "type": "text",
+        "id": "social_title",
+        "label": "Social heading"
+      },
+      {
+        "type": "header",
+        "content": "Newsletter"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_newsletter",
+        "label": "Show newsletter",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "newsletter_section_title",
+        "label": "Heading"
+      },
+      {
+        "type": "richtext",
+        "id": "newsletter_subheading",
+        "label": "Subheading",
+        "default": "<p>Receive special offers and first look at new products.</p>"
+      },
+      {
+        "type": "select",
+        "id": "newsletter_color_scheme",
+        "label": "Newsletter color scheme",
+        "options": [
+            { "value": "primary", "label": "Primary"},
+            { "value": "secondary", "label": "Secondary"},
+            { "value": "tertiary", "label": "Tertiary"}
+        ],
+        "default":   "secondary"
+      },
+      {
+        "type":      "header",
+        "content":   "Layout"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_grid_border",
+        "label": "Show grid border",
+        "default": false
+      },
+      {
+        "type":      "header",
+        "content":   "Colors"
+      },
+      {
+        "type": "select",
+        "id": "color_scheme",
+        "label": "Color scheme",
+        "options": [
+            { "value": "primary", "label": "Primary"},
+            { "value": "secondary", "label": "Secondary"},
+            { "value": "tertiary", "label": "Tertiary"}
+        ],
+        "default":   "primary"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "menu",
+        "name": "Menu",
+        "limit": 2,
+        "settings": [
+          {
+            "type": "link_list",
+            "id": "main_linklist",
+            "label": "Menu",
+            "default": "footer",
+            "info": "This menu won't show dropdown items"
+          },
+          {
+            "type": "checkbox",
+            "id": "show_heading",
+            "label": "Show heading",
+            "default": true
+          }
+        ]
+      }
+    ]
+  }
+
+{% endschema %}

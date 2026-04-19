@@ -1,0 +1,34 @@
+{%- liquid
+  assign limit = 320
+  if repeat_text == false
+    assign limit = 65
+    assign speed_number = speed_number | divided_by: 5
+  endif
+  assign speed_number = limit | minus: speed_number
+-%}
+{%- capture speed -%}marquee {{ speed_number}}s linear infinite{%- endcapture -%}
+<div id="marquee-{{ id }}" class="{% if text_size_class contains 'xl' %}py-4{% else %}py-2{% endif %} marquee bg-scheme-background text-scheme-text overflow-hidden" data-color-scheme="{{ section_color }}">
+  {%- if link != blank -%}
+  <a href="{{ link }}" class="text-scheme-text hover:text-scheme-accent">
+  {%- endif -%}
+  <div class="marquee-container inline-block whitespace-nowrap pl-100 font-{{ font }} {{ text_size_class }}">
+    {%- if repeat_text -%}
+      {% for i in (1..4) %}
+      <span {% if i > 1 %}aria-hidden="true"{% endif %}>{{ text }}</span>
+      {% endfor %}
+    {%- else -%}
+      <span>{{ text }}</span>
+    {%- endif -%}
+  </div>
+  {%- if link != blank -%}
+  </a>
+  {% endif %}
+</div>
+
+<style>
+@media (prefers-reduced-motion: no-preference) {
+  #marquee-{{ id }} .marquee-container {
+    animation: {{ speed }} {{ direction }};
+  }
+}
+</style>

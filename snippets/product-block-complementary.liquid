@@ -1,0 +1,50 @@
+{%- liquid
+  assign products_per_row = block.settings.products_per_row_desktop | plus: 0
+  assign products_per_row_mobile = block.settings.products_per_row_mobile | plus: 0
+-%}
+
+{%- if recommendations.performed and recommendations.products_count > 0 -%}
+  <div class="product-recommendations product-recommendations--font-{{ block.settings.heading_text_style }} mt-8" {{ block.shopify_attributes }}>
+    <div class="product-recommendations-container border-b-grid border-grid-color -mx-2 lg:-mx-4{% if block.settings.heading_text_style == 'heading' %} border-t-grid{% endif %}">
+      {%- if block.settings.heading != '' -%}
+        <h2 class="product-recommendations-title section-x-padding pb-theme{% if block.settings.heading_text_style == 'heading' %} font-heading {{ settings.base_heading_size }} pt-theme-double{% else %} font-body{% endif %}">{{ block.settings.heading }}</h2>
+      {%- endif -%}
+
+      <ul class="grid grid-cols-{{ products_per_row_mobile }} lg:grid-cols-{{ products_per_row }} gap-gutter bg-border z-10{% if recommendations.products.size > 0 %} border-t-grid border-grid-color{% endif %}">
+        {%- for product in recommendations.products -%}
+          {%- assign counter = counter | plus: 1 -%}
+          <li class="bg-scheme-background text-scheme-text">
+            {%- render 'product-grid-item',
+              product: product,
+              section_color: section_color,
+              products_per_row: products_per_row,
+              products_per_row_mobile: products_per_row_mobile,
+              responsive_image_counter: forloop.index
+            -%}
+          </li>
+        {%- endfor -%}
+        {%- liquid
+          assign items_on_last_row = counter | modulo: products_per_row
+          assign col_span = grid_cols | divided_by: products_per_row
+          assign placeholder_width = products_per_row | minus: items_on_last_row | times: col_span
+          assign items_on_last_row_mobile = counter | modulo: products_per_row_mobile
+          assign col_span_mobile = 2 | divided_by: products_per_row_mobile
+          assign placeholder_width_mobile = products_per_row_mobile | minus: items_on_last_row_mobile | times: col_span_mobile
+        -%}
+        {%- if items_on_last_row != 0 -%}
+          <li class="none absolute lg:static lg:block lg:col-span-{{ placeholder_width }} bg-scheme-background" aria-hidden="true" role="presentation"></li>
+        {%- endif -%}
+        {%- if items_on_last_row_mobile != 0 -%}
+          <li class="block lg:none lg:absolute col-span-{{ placeholder_width_mobile }} bg-scheme-background" aria-hidden="true" role="presentation"></li>
+        {%- endif -%}
+      </ul>
+    </div>
+  </div>
+{%- else -%}
+  <div
+    class="product-recommendations product-recommendations--font-{{ block.settings.heading_text_style }} mt-8" {{ block.shopify_attributes }}
+    data-section-id="{{ section.id }}"
+    data-section-type="product-recommendations"
+    data-request-url="{{ routes.product_recommendations_url }}?section_id={{ section.id }}&product_id={{ product.id }}&limit={{ block.settings.product_list_limit }}&intent=complementary"
+  ></div>
+{%- endif -%}

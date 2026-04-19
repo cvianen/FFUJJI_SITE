@@ -1,0 +1,104 @@
+{%- liquid
+  assign section_color = section.settings.color_scheme
+  assign title = section.settings.title
+  assign show_labels = section.settings.show_labels
+  assign swatch_size = section.settings.swatch_size
+  assign items = product.metafields.custom.color_group_products.value
+-%}
+
+{%- if template.name == 'product' and items != blank -%}
+  <div class="section-x-padding py-4" data-color-scheme="{{ section_color }}">
+    {%- if title != blank -%}
+      <p class="mb-3 text-sm font-medium text-scheme-text">{{ title | escape }}</p>
+    {%- endif -%}
+
+    <div class="flex flex-wrap items-center gap-3" role="list">
+      {%- for p in items -%}
+        {%- liquid
+          assign label = p.title
+          assign color = p.metafields.custom.swatch_color.value | default: section.settings.fallback_color
+          assign is_active = false
+          if p.id == product.id
+            assign is_active = true
+          endif
+        -%}
+
+        <a
+          href="{{ p.url }}"
+          class="inline-flex items-center gap-2 hover:text-scheme-accent focus:outline-none"
+          role="listitem"
+          aria-label="{{ label | escape }}"
+          title="{{ label | escape }}"
+        >
+          <span
+            class="block rounded-full border border-grid-color"
+            style="
+              width: {{ swatch_size }}px;
+              height: {{ swatch_size }}px;
+              background: {{ color }};
+              {% if is_active %}
+                outline: 2px solid currentColor;
+                outline-offset: 2px;
+              {% endif %}
+            "
+          ></span>
+
+          {%- if show_labels -%}
+            <span class="text-sm text-scheme-text">{{ label }}</span>
+          {%- endif -%}
+        </a>
+      {%- endfor -%}
+    </div>
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Color swatches",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Titel",
+      "default": "Kleur"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_labels",
+      "label": "Toon labels",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "swatch_size",
+      "label": "Bolletje grootte",
+      "min": 14,
+      "max": 48,
+      "step": 1,
+      "default": 22
+    },
+    {
+      "type": "color",
+      "id": "fallback_color",
+      "label": "Fallback kleur (als leeg)",
+      "default": "#CCCCCC"
+    },
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "options": [
+        { "value": "primary", "label": "Primary" },
+        { "value": "secondary", "label": "Secondary" },
+        { "value": "tertiary", "label": "Tertiary" }
+      ],
+      "default": "secondary"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Kleuren swatches (product links)"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,139 @@
+{%- liquid
+  assign section_color = section.settings.color_scheme
+  assign description_parts = page.content | replace: '<h2 data-mce-fragment="1">', '<h2>' | split: '<h2>'
+  assign counter = 0
+  assign tabs_count = 0
+  for part in description_parts
+    if part != blank and part contains '</h2>'
+      assign tabs_count = tabs_count | plus: 1
+    endif
+  endfor
+-%}
+<section
+  x-data="ThemeSection_{{ section.id | handleize | replace: '-', '_' | replace: '__', '_' }}()"
+  class="page text-scheme-text bg-scheme-background border-t-grid border-grid-color"
+  data-section-type="collapsible"
+  data-section-id="{{ section.id }}"
+  data-alpine-id="{{ section.id | handleize | replace: '-', '_' | replace: '__', '_' }}"
+  data-tabs-count="{{ tabs_count }}"
+  data-single-tab-a-time="{{ section.settings.one_tab_at_a_time }}"
+  data-first-tab-opened="{{ section.settings.open_first_tab }}"
+  data-color-scheme="{{ section_color }}">
+  <div class="section-x-padding py-theme lg:flex {{ section.settings.content_position }}">
+    <div class="{{ section.settings.content_width }}">
+      <div class="{%- if section.settings.content_position == 'lg:justify-center' -%}text-center{%- endif -%}">
+        <h1 class="font-heading {{ settings.template_heading_size }} break-words">{{ page.title }}</h1>
+      </div>
+
+      {% for part in description_parts %}
+        {% unless part == blank %}
+          {% if part contains '</h2>' %}
+            {% assign part_parts = part | split: '</h2>' %}
+            {% assign heading_handle = part_parts.first | handle %}
+            <div class="{% if counter == 0 %}mt-8{% endif %} -mx-2 lg:-mx-4 section-x-padding py-2 border-t-grid border-theme-color {% if forloop.last %}border-b-grid{% endif %}" x-cloak>
+              <h2 class="{{ settings.base_heading_size }}" >
+                <button
+                  class="font-heading cursor-pointer flex justify-between items-center w-full"
+                  aria-controls="{{ heading_handle }}"
+                  @click="openTab({{ counter }})"
+                  :aria-expanded="tabOpen.tab{{ counter }} ? true : 'false'">
+                  {{ part_parts.first }}
+                  <span class="inline-block w-5 h-5" x-show="!tabOpen.tab{{ counter }}">{%- render 'icon-plus' %}</span>
+                  <span class="inline-block w-5 h-5" x-show="tabOpen.tab{{ counter }}">{%- render 'icon-minus' %}</span>
+                </button>
+              </h2>
+              <div class="py-4 rte" x-show="tabOpen.tab{{ counter }}" id="{{ heading_handle }}">{{ part_parts.last }}</div>
+            </div>
+            {% assign counter = counter | plus: 1 %}
+          {% else %}
+            <div class="rte">
+              {{ part }}
+            </div>
+          {% endif %}
+        {% endunless %}
+      {% endfor %}
+
+      <noscript>
+        <div class="rte mt-4">
+          {{ page.content }}
+        </div>
+      </noscript>
+    </div>
+  </div>
+</section>
+
+{%- if section.settings.override_header_footer_color_scheme -%}
+  {%- render 'header-footer-color-scheme-override', section_color: section_color -%}
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Collapsible tabs",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "H2 headings will be converted into collapsible tabs. Learn more about [this feature](https://help.switchthemes.co/baseline/sections/template/pages.html)"
+    },
+    {
+      "type": "select",
+      "id": "content_width",
+      "label": "Desktop content width",
+      "options": [
+        { "value": "lg:w-1/2", "label": "One half"},
+        { "value": "lg:w-2/3", "label": "Two thirds"},
+        { "value": "lg:w-full", "label": "Full"}
+      ],
+      "default":   "lg:w-full"
+    },
+    {
+      "type": "select",
+      "id": "content_position",
+      "label": "Desktop content position",
+      "options": [
+        { "value": "lg:justify-start", "label": "Left" },
+        { "value": "lg:justify-center", "label": "Center" },
+        { "value": "lg:justify-end", "label": "Right" }
+      ],
+      "default": "lg:justify-start",
+      "info": "Does not apply when desktop content width is set to full."
+    },
+    {
+      "type": "header",
+      "content": "Tabs"
+    },
+    {
+      "type": "checkbox",
+      "id": "one_tab_at_a_time",
+      "label": "Open one tab at a time",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "open_first_tab",
+      "label": "Open the first tab by default",
+      "default": false
+    },
+    {
+      "type":      "header",
+      "content":   "Color"
+    },
+    {
+       "type": "select",
+       "id": "color_scheme",
+       "label": "Color scheme",
+       "options": [
+          { "value": "primary", "label": "Primary"},
+          { "value": "secondary", "label": "Secondary"},
+          { "value": "tertiary", "label": "Tertiary"}
+       ]
+    },
+    {
+      "type": "checkbox",
+      "id": "override_header_footer_color_scheme",
+      "label": "Use this color scheme for header and footer",
+      "info": "This will only apply to the page template",
+      "default": false
+    }
+  ]
+}
+{% endschema %}

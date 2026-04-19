@@ -1,0 +1,64 @@
+{%- assign section_color = section.settings.color_scheme -%}
+
+<section class="text-scheme-text gap-gutter overflow-hidden border-t-grid border-grid-color bg-border" data-color-scheme="{{ section_color }}">
+  <div class="bg-scheme-background">
+    <div class="py-theme section-x-padding">
+      {%- if section.settings.title -%}
+      <h2 class="font-heading text-2xl mb-4">{{ section.settings.title }}</h2>
+      {%- endif -%}
+
+      {%- if section.settings.subheading != blank -%}
+      <div class="rte text-base mb-4 font-body">
+        {{ section.settings.subheading }}
+      </div>
+      {%- endif -%}
+
+      {{ section.settings.custom_liquid }}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Custom Liquid",
+  "settings": [
+    {
+      "id": "title",
+      "type": "text",
+      "label": "Title",
+      "default": "Custom Liquid"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Sub-heading",
+      "default": "Sub-heading goes here"
+    },
+    {
+      "type": "liquid",
+      "id": "custom_liquid",
+      "label": "Custom Liquid"
+    },
+    {
+      "type": "header",
+      "content": "Color"
+    },
+    {
+       "type": "select",
+       "id": "color_scheme",
+       "label": "Color scheme",
+       "options": [
+          { "value": "primary", "label": "Primary"},
+          { "value": "secondary", "label": "Secondary"},
+          { "value": "tertiary", "label": "Tertiary"}
+       ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom Liquid",
+      "category": "Advanced Layout"
+    }
+  ]
+}
+{% endschema %}

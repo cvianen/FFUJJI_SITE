@@ -1,0 +1,25 @@
+<div class="collapsible-tab {% if tab_counter == 0 %}mt-10{% endif %} {% if is_last %}mb-8{% endif %}">
+  <div class="-mx-2 lg:-mx-4 section-x-padding py-2"
+       x-data="{ open: {% if tab_counter == 0 %}true{% else %}false{% endif %} }"
+       @product-tab-opened.window="open = ($event.detail.id === '{{ tab_id }}')"
+       x-cloak>
+    <h2>
+      <button @click="$dispatch('product-tab-opened', { id: open ? '' : '{{ tab_id }}' })"
+              class="font-body uppercase tracking-wider cursor-pointer flex justify-between items-center w-full text-left"
+              :aria-expanded="open ? true : 'false'">
+        <span>{{ tab_heading }}</span>
+        <span class="inline-block w-5 h-5" x-show="!open">{%- render 'icon-plus' %}</span>
+        <span class="inline-block w-5 h-5" x-show="open">{%- render 'icon-minus' %}</span>
+      </button>
+    </h2>
+    <div class="py-4 rte text-sm" x-show="open" id="{{ tab_id }}">
+      {{ tab_content | newline_to_br }}
+    </div>
+  </div>
+  <noscript>
+    <div class="rte mt-8">
+      <h2>{{ tab_heading }}</h2>
+      {{ tab_content | newline_to_br }}
+    </div>
+  </noscript>
+</div>

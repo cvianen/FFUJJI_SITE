@@ -1,0 +1,81 @@
+{
+  "sections": {
+    "marquee": {
+      "type": "marquee",
+      "settings": {
+        "text": "SS24: THE TRIAD COLLECTION",
+        "repeat_text": true,
+        "link": "shopify://collections/shop",
+        "text_size": "text-lg",
+        "font": "body",
+        "speed": 260,
+        "direction": "reverse",
+        "color_scheme": "tertiary"
+      }
+    },
+    "lookbook": {
+      "type": "lookbook-page",
+      "blocks": {
+        "header": {
+          "type": "header",
+          "settings": {
+            "season": "SS24",
+            "title": "The Triad Collection"
+          }
+        },
+        "full_1": {
+          "type": "image_full",
+          "settings": {
+            "image": "shopify://shop_images/MT_PHOTO_VISUAL.png"
+          }
+        },
+        "pair_1": {
+          "type": "image_pair",
+          "settings": {
+            "image_left": "shopify://shop_images/c56ea332-7e6b-4008-b0b5-d49a5ffa357b.jpg",
+            "image_right": "shopify://shop_images/fae6aab9-1451-4796-88d6-8c62fc65f32b.jpg"
+          }
+        },
+        "full_2": {
+          "type": "image_full",
+          "settings": {
+            "image": "shopify://shop_images/P7403499.png"
+          }
+        },
+        "pair_2": {
+          "type": "image_pair",
+          "settings": {
+            "image_left": "shopify://shop_images/000173.jpg",
+            "image_right": "shopify://shop_images/000165.png"
+          }
+        },
+        "full_3": {
+          "type": "image_full",
+          "settings": {
+            "image": "shopify://shop_images/11845eb2-513b-4612-bbfb-0437310bf771.jpg"
+          }
+        },
+        "pair_3": {
+          "type": "image_pair",
+          "settings": {
+            "image_left": "shopify://shop_images/IMG_7936.jpg",
+            "image_right": "shopify://shop_images/TRIAD_LOGO_TEE_BLACK.png"
+          }
+        }
+      },
+      "block_order": [
+        "header",
+        "full_1",
+        "pair_1",
+        "full_2",
+        "pair_2",
+        "full_3",
+        "pair_3"
+      ],
+      "settings": {
+        "color_scheme": "primary"
+      }
+    }
+  },
+  "order": ["marquee", "lookbook"]
+}

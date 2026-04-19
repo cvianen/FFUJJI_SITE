@@ -1,0 +1,43 @@
+<a x-ref="search" @click.prevent="openSearch()" @keydown.space="openSearch()" class="inline-block py-2 flex {% if layout contains 'spread'%}h-full{% endif %}" href="{{ routes.search_url }}">
+  {%- if show_icons -%}
+    <span class="visually-hidden">{{ 'layout.navigation.search' | t }}</span>
+    <span class="my-auto inline-block w-5 h-5 align-middle">{%- render 'icon-search' -%}</span>
+  {%- else -%}
+    <span class="my-auto">{{ 'layout.navigation.search' | t }}</span>
+  {%- endif -%}
+</a>
+<div class="absolute left-0 bottom-0 w-full transform {% if layout contains 'menu_below' %}translate-y-1{% else %}translate-y-full{% endif %} z-20 bg-scheme-background text-scheme-text border-b-grid border-t-grid border-grid-color py-2 section-x-padding"
+     x-cloak
+     x-show="searchOpen"
+     x-transition:enter="transition ease duration-200"
+     x-transition:enter-start="opacity-0"
+     x-transition:enter-end="opacity-100"
+     x-transition:leave="transition ease duration-00"
+     x-transition:leave-start="opacity-100"
+     x-transition:leave-end="opacity-0"
+     @click.away.prevent="searchOpen = false"
+     data-header-search
+     @focusout="searchFocusOut($event)"
+     data-color-scheme="{{ section_color }}"
+>
+  <form action="{{ routes.search_url }}" method="get" class="input-group search" role="search">
+    <label for="search{% if layout != blank %}-{{ layout }}{% endif %}-{{ location | default: 'desktop' }}" class="hidden">{{ 'general.search.submit' | t }}</label>
+
+    <div class="flex items-center justify-between">
+      <button class="py-2 mr-4"
+              aria-label="{{ 'general.search.submit' | t }}"
+              type="submit">
+        <span class="inline-block w-5 h-5 align-middle">{%- render 'icon-search' -%}</span>
+        <span class="visually-hidden">{{ 'general.search.submit' | t }}</span>
+      </button>
+      <input x-ref="searchInput" id="search{% if layout != blank %}-{{ layout }}{% endif %}-{{ location | default: 'desktop' }}" type="text" name="q" value="{{ search.terms | escape }}" placeholder="{{ 'general.search.placeholder' | t }}" class="placeholder-current font-body w-full block bg-transparent" aria-label="{{ 'general.search.placeholder' | t }}" data-search-input>
+      <button class="py-2 ml-4"
+              @click="searchOpen = false"
+              type="button">
+        <span class="visually-hidden">{{ 'general.accessibility.close_modal' | t }}</span>
+        <span class="inline-block w-5 h-5 align-middle">{%- render 'icon-close' -%}</span>
+      </button>
+    </div>
+
+  </form>
+</div>

@@ -1,0 +1,58 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "lookbook": {
+      "type": "lookbook-page",
+      "blocks": {
+        "header": {
+          "type": "header",
+          "settings": {
+            "season": "FW24",
+            "title": "Hat Drop"
+          }
+        },
+        "pair_1": {
+          "type": "image_pair",
+          "settings": {
+            "image_left": "shopify://shop_images/IMG_0322.jpg",
+            "image_right": "shopify://shop_images/IMG_0180.jpg"
+          }
+        },
+        "pair_2": {
+          "type": "image_pair",
+          "settings": {
+            "image_left": "shopify://shop_images/TEST4.png",
+            "image_right": "shopify://shop_images/IMG_0311.jpg"
+          }
+        },
+        "pair_3": {
+          "type": "image_pair",
+          "settings": {
+            "image_left": "shopify://shop_images/IMG_0304.jpg",
+            "image_right": "shopify://shop_images/Lookbook_4.png"
+          }
+        },
+        "pair_4": {
+          "type": "image_pair",
+          "settings": {
+            "image_left": "shopify://shop_images/IMG_0349.jpg",
+            "image_right": "shopify://shop_images/MOBILE_BACKGROUND_FINAL.jpg"
+          }
+        }
+      },
+      "block_order": ["header", "pair_1", "pair_2", "pair_3", "pair_4"],
+      "settings": {
+        "color_scheme": "primary"
+      }
+    }
+  },
+  "order": ["lookbook"]
+}

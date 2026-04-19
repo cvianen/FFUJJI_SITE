@@ -1,0 +1,207 @@
+<div class="product-page-size-chart-link mt-8" x-data="{ ...ThemeComponent_PopUp(), unit: 'cm' }" x-init="mounted()" data-color-scheme="{{ section_color }}">
+  <div class="js-enabled" {{ block.shopify_attributes }}>
+    <button
+      @click="open = true"
+      x-ref="trigger"
+      aria-haspopup="dialog"
+      class="cursor-pointer group inline-flex justify-start items-center text-scheme-meta hover:text-scheme-accent">
+      <span class="inline-block w-5 h-5 mr-2">{% render 'product-icon', icon: 'ruler' %}</span>
+      <span class="{% if settings.links_show_underline %}border-b-text border-scheme-meta group-hover:border-scheme-accent{% endif %} py-1">
+        {{ block.settings.link_text | default: 'Size chart' }}
+      </span>
+    </button>
+  </div>
+
+  <div x-show="open" x-ref="modal" class="fixed top-0 left-0 right-0 bottom-0 flex justify-center items-center p-4 lg:p-8 z-100" x-cloak>
+    <div @click.away.prevent="open = false"
+         class="bg-scheme-background text-scheme-text w-full max-w-2xl relative overflow-auto"
+         style="max-height: 90vh;"
+         role="dialog"
+         aria-label="{{ block.settings.link_text | default: 'Size chart' }}"
+         aria-modal="true"
+         tabindex="-1">
+
+      <button x-ref="close" @click="open = false" type="button" class="block p-1 w-8 ml-auto absolute top-4 right-4 cursor-pointer" autofocus>
+        <span class="visually-hidden">{{ 'general.accessibility.close_modal' | t }}</span>
+        <span class="inline-block w-5 h-5">{% render 'icon-close' %}</span>
+      </button>
+
+      <div class="p-8 lg:p-10">
+        <h2 class="font-heading text-center mb-8" style="font-size: 1.1rem; letter-spacing: 0.1em; text-transform: uppercase;">{{ product.title }}</h2>
+
+        <div class="flex mb-6">
+          <button @click="unit = 'cm'" type="button"
+            :class="unit === 'cm' ? 'bg-scheme-text text-scheme-background' : 'text-scheme-text'"
+            class="px-5 py-2 text-sm tracking-widest uppercase cursor-pointer transition-colors"
+            style="border: 1px solid currentColor;">
+            CM
+          </button>
+          <button @click="unit = 'in'" type="button"
+            :class="unit === 'in' ? 'bg-scheme-text text-scheme-background' : 'text-scheme-text'"
+            class="px-5 py-2 text-sm tracking-widest uppercase cursor-pointer transition-colors -ml-px"
+            style="border: 1px solid currentColor;">
+            IN
+          </button>
+        </div>
+
+        <table class="w-full text-sm" style="border-collapse: collapse;">
+          <thead>
+            <tr style="border-bottom: 1px solid currentColor;">
+              <th class="text-left py-3 pr-4 font-normal">Size</th>
+              <th class="text-center py-3 pr-4 font-normal">
+                Length
+                <span x-show="unit === 'cm'" class="font-normal opacity-60">(cm)</span>
+                <span x-show="unit === 'in'" class="font-normal opacity-60" x-cloak>(in)</span>
+              </th>
+              <th class="text-center py-3 pr-4 font-normal">
+                Pit to pit
+                <span x-show="unit === 'cm'" class="font-normal opacity-60">(cm)</span>
+                <span x-show="unit === 'in'" class="font-normal opacity-60" x-cloak>(in)</span>
+              </th>
+              <th class="text-center py-3 pr-4 font-normal">
+                Shoulder width
+                <span x-show="unit === 'cm'" class="font-normal opacity-60">(cm)</span>
+                <span x-show="unit === 'in'" class="font-normal opacity-60" x-cloak>(in)</span>
+              </th>
+              <th class="text-center py-3 font-normal">
+                Sleeve
+                <span x-show="unit === 'cm'" class="font-normal opacity-60">(cm)</span>
+                <span x-show="unit === 'in'" class="font-normal opacity-60" x-cloak>(in)</span>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {%- if block.settings.size_1_name != blank -%}
+            <tr style="border-bottom: 1px solid rgba(0,0,0,0.1);">
+              <td class="py-3 pr-4">{{ block.settings.size_1_name }}</td>
+              <td class="text-center py-3 pr-4">
+                <span x-show="unit === 'cm'">{{ block.settings.size_1_length }}</span>
+                <span x-show="unit === 'in'" x-cloak>{{ block.settings.size_1_length | times: 0.393701 | round: 1 }}</span>
+              </td>
+              <td class="text-center py-3 pr-4">
+                <span x-show="unit === 'cm'">{{ block.settings.size_1_pit_to_pit }}</span>
+                <span x-show="unit === 'in'" x-cloak>{{ block.settings.size_1_pit_to_pit | times: 0.393701 | round: 1 }}</span>
+              </td>
+              <td class="text-center py-3 pr-4">
+                <span x-show="unit === 'cm'">{{ block.settings.size_1_shoulder }}</span>
+                <span x-show="unit === 'in'" x-cloak>{{ block.settings.size_1_shoulder | times: 0.393701 | round: 1 }}</span>
+              </td>
+              <td class="text-center py-3">
+                <span x-show="unit === 'cm'">{{ block.settings.size_1_sleeve }}</span>
+                <span x-show="unit === 'in'" x-cloak>{{ block.settings.size_1_sleeve | times: 0.393701 | round: 1 }}</span>
+              </td>
+            </tr>
+            {%- endif -%}
+            {%- if block.settings.size_2_name != blank -%}
+            <tr style="border-bottom: 1px solid rgba(0,0,0,0.1); background: rgba(0,0,0,0.02);">
+              <td class="py-3 pr-4">{{ block.settings.size_2_name }}</td>
+              <td class="text-center py-3 pr-4">
+                <span x-show="unit === 'cm'">{{ block.settings.size_2_length }}</span>
+                <span x-show="unit === 'in'" x-cloak>{{ block.settings.size_2_length | times: 0.393701 | round: 1 }}</span>
+              </td>
+              <td class="text-center py-3 pr-4">
+                <span x-show="unit === 'cm'">{{ block.settings.size_2_pit_to_pit }}</span>
+                <span x-show="unit === 'in'" x-cloak>{{ block.settings.size_2_pit_to_pit | times: 0.393701 | round: 1 }}</span>
+              </td>
+              <td class="text-center py-3 pr-4">
+                <span x-show="unit === 'cm'">{{ block.settings.size_2_shoulder }}</span>
+                <span x-show="unit === 'in'" x-cloak>{{ block.settings.size_2_shoulder | times: 0.393701 | round: 1 }}</span>
+              </td>
+              <td class="text-center py-3">
+                <span x-show="unit === 'cm'">{{ block.settings.size_2_sleeve }}</span>
+                <span x-show="unit === 'in'" x-cloak>{{ block.settings.size_2_sleeve | times: 0.393701 | round: 1 }}</span>
+              </td>
+            </tr>
+            {%- endif -%}
+            {%- if block.settings.size_3_name != blank -%}
+            <tr style="border-bottom: 1px solid rgba(0,0,0,0.1);">
+              <td class="py-3 pr-4">{{ block.settings.size_3_name }}</td>
+              <td class="text-center py-3 pr-4">
+                <span x-show="unit === 'cm'">{{ block.settings.size_3_length }}</span>
+                <span x-show="unit === 'in'" x-cloak>{{ block.settings.size_3_length | times: 0.393701 | round: 1 }}</span>
+              </td>
+              <td class="text-center py-3 pr-4">
+                <span x-show="unit === 'cm'">{{ block.settings.size_3_pit_to_pit }}</span>
+                <span x-show="unit === 'in'" x-cloak>{{ block.settings.size_3_pit_to_pit | times: 0.393701 | round: 1 }}</span>
+              </td>
+              <td class="text-center py-3 pr-4">
+                <span x-show="unit === 'cm'">{{ block.settings.size_3_shoulder }}</span>
+                <span x-show="unit === 'in'" x-cloak>{{ block.settings.size_3_shoulder | times: 0.393701 | round: 1 }}</span>
+              </td>
+              <td class="text-center py-3">
+                <span x-show="unit === 'cm'">{{ block.settings.size_3_sleeve }}</span>
+                <span x-show="unit === 'in'" x-cloak>{{ block.settings.size_3_sleeve | times: 0.393701 | round: 1 }}</span>
+              </td>
+            </tr>
+            {%- endif -%}
+            {%- if block.settings.size_4_name != blank -%}
+            <tr style="border-bottom: 1px solid rgba(0,0,0,0.1); background: rgba(0,0,0,0.02);">
+              <td class="py-3 pr-4">{{ block.settings.size_4_name }}</td>
+              <td class="text-center py-3 pr-4">
+                <span x-show="unit === 'cm'">{{ block.settings.size_4_length }}</span>
+                <span x-show="unit === 'in'" x-cloak>{{ block.settings.size_4_length | times: 0.393701 | round: 1 }}</span>
+              </td>
+              <td class="text-center py-3 pr-4">
+                <span x-show="unit === 'cm'">{{ block.settings.size_4_pit_to_pit }}</span>
+                <span x-show="unit === 'in'" x-cloak>{{ block.settings.size_4_pit_to_pit | times: 0.393701 | round: 1 }}</span>
+              </td>
+              <td class="text-center py-3 pr-4">
+                <span x-show="unit === 'cm'">{{ block.settings.size_4_shoulder }}</span>
+                <span x-show="unit === 'in'" x-cloak>{{ block.settings.size_4_shoulder | times: 0.393701 | round: 1 }}</span>
+              </td>
+              <td class="text-center py-3">
+                <span x-show="unit === 'cm'">{{ block.settings.size_4_sleeve }}</span>
+                <span x-show="unit === 'in'" x-cloak>{{ block.settings.size_4_sleeve | times: 0.393701 | round: 1 }}</span>
+              </td>
+            </tr>
+            {%- endif -%}
+            {%- if block.settings.size_5_name != blank -%}
+            <tr style="border-bottom: 1px solid rgba(0,0,0,0.1);">
+              <td class="py-3 pr-4">{{ block.settings.size_5_name }}</td>
+              <td class="text-center py-3 pr-4">
+                <span x-show="unit === 'cm'">{{ block.settings.size_5_length }}</span>
+                <span x-show="unit === 'in'" x-cloak>{{ block.settings.size_5_length | times: 0.393701 | round: 1 }}</span>
+              </td>
+              <td class="text-center py-3 pr-4">
+                <span x-show="unit === 'cm'">{{ block.settings.size_5_pit_to_pit }}</span>
+                <span x-show="unit === 'in'" x-cloak>{{ block.settings.size_5_pit_to_pit | times: 0.393701 | round: 1 }}</span>
+              </td>
+              <td class="text-center py-3 pr-4">
+                <span x-show="unit === 'cm'">{{ block.settings.size_5_shoulder }}</span>
+                <span x-show="unit === 'in'" x-cloak>{{ block.settings.size_5_shoulder | times: 0.393701 | round: 1 }}</span>
+              </td>
+              <td class="text-center py-3">
+                <span x-show="unit === 'cm'">{{ block.settings.size_5_sleeve }}</span>
+                <span x-show="unit === 'in'" x-cloak>{{ block.settings.size_5_sleeve | times: 0.393701 | round: 1 }}</span>
+              </td>
+            </tr>
+            {%- endif -%}
+            {%- if block.settings.size_6_name != blank -%}
+            <tr style="background: rgba(0,0,0,0.02);">
+              <td class="py-3 pr-4">{{ block.settings.size_6_name }}</td>
+              <td class="text-center py-3 pr-4">
+                <span x-show="unit === 'cm'">{{ block.settings.size_6_length }}</span>
+                <span x-show="unit === 'in'" x-cloak>{{ block.settings.size_6_length | times: 0.393701 | round: 1 }}</span>
+              </td>
+              <td class="text-center py-3 pr-4">
+                <span x-show="unit === 'cm'">{{ block.settings.size_6_pit_to_pit }}</span>
+                <span x-show="unit === 'in'" x-cloak>{{ block.settings.size_6_pit_to_pit | times: 0.393701 | round: 1 }}</span>
+              </td>
+              <td class="text-center py-3 pr-4">
+                <span x-show="unit === 'cm'">{{ block.settings.size_6_shoulder }}</span>
+                <span x-show="unit === 'in'" x-cloak>{{ block.settings.size_6_shoulder | times: 0.393701 | round: 1 }}</span>
+              </td>
+              <td class="text-center py-3">
+                <span x-show="unit === 'cm'">{{ block.settings.size_6_sleeve }}</span>
+                <span x-show="unit === 'in'" x-cloak>{{ block.settings.size_6_sleeve | times: 0.393701 | round: 1 }}</span>
+              </td>
+            </tr>
+            {%- endif -%}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div x-show="open" class="bg-scheme-text fixed top-0 left-0 right-0 bottom-0 z-99 opacity-40" x-cloak></div>
+</div>

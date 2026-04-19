@@ -1,0 +1,79 @@
+<div class="bg-scheme-background border-t-grid border-grid-color relative overflow-hidden {% if height == 'full_screen' %}h-screen-header{% elsif height == 'full_height' %}h-full{% else %}h-auto{% endif %}" data-color-scheme="{{ background }}">
+  <div class="{% unless settings.fill_image_to_border_edge %}p-2 lg:p-4 {% endunless %} {% if indent_image %}p-8 lg:p-16{% endif %} h-full w-full">
+    <div class="{% if settings.fill_image_to_border_edge == false or height == 'full_screen' or height == 'full_height' %}relative h-full w-full{% endif %}">
+    {% if image != blank %}
+      {% if image_mobile != blank %}
+      <div class="hidden lg:block">
+      {% endif %}
+
+      {% if height == 'full_screen' or height == 'full_height' %}
+        {% render 'image-object' with
+          image: image,
+          focal_point: image_focal_point
+        %}
+      {% else %}
+        {% render 'responsive-image' with
+          image: image
+        %}
+      {% endif %}
+
+      {% if image_mobile != blank %}
+      </div>
+      {% endif %}
+
+      {% if image_mobile != blank %}
+      <div class="lg:hidden">
+        {% assign image = image_mobile %}
+        {% if height == 'full_screen' or height == 'full_height' %}
+          {% render 'image-object' with
+            image: image,
+            focal_point: image_focal_point
+          %}
+        {% else %}
+          {% render 'responsive-image' with
+            image: image
+          %}
+        {% endif %}
+      </div>
+      {% endif %}
+    {% else %}
+      <div class="bg-placeholder-bg p-8 text-placeholder {% if height == 'full_screen' or height == 'full_height' %}absolute top-0 right-0 bottom-0 left-0{% endif %}">
+        {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg w-full h-full text-text fill-current' }}
+      </div>
+    {% endif %}
+    </div>
+  </div>
+
+  <div class="absolute top-0 left-0 right-0 bottom-0 z-10 section-x-padding py-theme">
+    <div class="w-full h-full  flex {{ content_position }} {% unless settings.fill_image_to_border_edge %}p-2 lg:p-4{% endunless %}">
+        <div class="{{ content_width_desktop }} text-scheme-text relative pb-20 lg:pb-28" data-color-scheme="{{ text_color }}">
+        {% if title != blank %}
+          <h2 class="font-heading {{ heading_size_class }} break-words">{{ title }}</h2>
+        {% endif %}
+
+        {% if text != blank %}
+        <div class="rte text-base mt-4">
+          {{ text }}
+        </div>
+        {% endif %}
+
+        {% if cta_link != blank and cta_text != '' %}
+        <div class="mt-8 text-0 hero-cta-offset">
+          {%- case cta_style -%}
+          {%- when 'link' -%}
+            {%- render 'link-underline',
+              section_color: text_color,
+              text: cta_text,
+              link: cta_link
+            -%}
+          {%- when 'button' -%}
+            <a href="{{ cta_link }}" class="inline-flex justify-center items-center text-base px-8 py-2 {% render 'button-style', section_color: text_color %}  {% render 'button-color', section_color: text_color %} ">
+              <span class="{% if settings.button_uppercase %}uppercase{% endif %}">{{ cta_text }}{% if settings.buttons_show_arrow %}&nbsp;&rarr;{% endif %}</span>
+            </a>
+          {%- endcase -%}
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>

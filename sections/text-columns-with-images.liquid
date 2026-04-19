@@ -1,0 +1,208 @@
+{%- liquid
+  assign section_color = 'primary' 
+  assign text_align = section.settings.text_alignment 
+  assign block_heading_level = 'h2' 
+  assign ratio = section.settings.crop | plus: 0
+  assign divisible_by_four =  section.blocks.size | modulo: 4
+  assign divisible_by_three =  section.blocks.size | modulo: 3
+  if divisible_by_four == 0
+    assign col_span = 'lg:col-span-3'
+  elsif divisible_by_three == 0
+    assign col_span = 'lg:col-span-4'
+  else
+    assign col_span = 'lg:col-span-6'
+  endif
+-%}
+<section class="border-t-grid border-grid-color bg-border">
+  {% if section.settings.title != '' %}
+    {%- assign block_heading_level = 'h3' -%}
+    {%- render 'section-title',
+      title: section.settings.title,
+      section_color: section_color
+    -%}
+  {% endif %}
+
+  <ul class="grid grid-cols-1 lg:grid-cols-12 gap-theme">
+    {% for block in section.blocks %}
+      {%- assign block_color = block.settings.color_scheme -%}
+      <li class="{{ col_span }} bg-scheme-background text-scheme-text text-base {{ text_align }} " {{ block.shopify_attributes }} data-color-scheme="{{ block_color }}">
+        {%- if block.settings.show_image -%}
+          {%- if block.settings.image != blank -%}
+          <div class="bg-scheme-background {% unless settings.fill_image_to_border_edge %}pt-2 px-2 lg:pt-4 lg:px-4{% else %}border-b-grid border-grid-color{% endunless %}">
+            <div class="relative">
+              {%- assign image = block.settings.image -%}
+              {% render 'image-crop' with
+                image: image,
+                ratio: ratio
+              %}
+            </div>
+          </div>
+          {%- else -%}
+          <div class="bg-scheme-background {% unless settings.fill_image_to_border_edge %}pt-2 px-2 lg:pt-4 lg:px-4{% else %}border-b-grid border-grid-color{% endunless %}">
+            <div class="relative h-full w-full">
+              {%- if section.settings.crop == '0' -%}
+                <div class="gallery-placeholder  bg-placeholder-bg ">
+                  {%- if settings.fill_image_to_border_edge -%}
+                    {% assign placeholder_svg_tag = 'placeholder-svg placeholder-svg--no-border' %}
+                  {%- else -%}
+                    {% assign placeholder_svg_tag = 'placeholder-svg' %}
+                  {%- endif -%}
+                  {{ 'image' | placeholder_svg_tag: placeholder_svg_tag }}
+                </div>
+              {%- else -%}
+                <div class="gallery-placeholder--cropped relative  bg-placeholder-bg "
+                  style="padding-top:{{ 1 | divided_by: ratio | times: 100 }}%;" >
+                  {%- if settings.fill_image_to_border_edge -%}
+                    {% assign placeholder_svg_tag = 'placeholder-svg fill-current gallery-placeholder--cropped__svg placeholder-svg--no-border' %}
+                  {%- else -%}
+                    {% assign placeholder_svg_tag = 'placeholder-svg fill-current  gallery-placeholder--cropped__svg' %}
+                  {%- endif -%}
+                  <span class="absolute top-0 left-0 right-0 bottom-0 text-text">{{ 'image' | placeholder_svg_tag: placeholder_svg_tag }}</span>
+                </div>
+              {%- endif -%}
+            </div>
+          </div>
+          {%- endif -%}
+        {%- endif -%}
+
+        <div class="section-x-padding py-theme">
+          {% if block.settings.title != '' %}
+          <{{ block_heading_level }} class="font-heading {{ settings.secondary_heading_size }}">{{ block.settings.title }}</{{ block_heading_level }}>
+          {% endif %}
+          <div class="rte {% if block.settings.title != '' %}mt-2{% endif %}">{{ block.settings.text }}</div>
+          {% if block.settings.cta_link %}
+          <div class="mt-4">
+            {%- render 'link-underline',
+              section_color: block_color,
+              text: block.settings.cta_text,
+              link: block.settings.cta_link
+            -%}
+          </div>
+          {% endif %}
+        </div>
+      </li>
+    {% endfor %}
+  </ul>
+</section>
+
+{% schema %}
+  {
+    "name": "Text columns with images",
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Heading"
+      },
+      {
+        "type": "select",
+        "id": "crop",
+        "label": "Crop images",
+        "options": [
+          {
+            "value": "0",
+            "label": "No crop"
+          },
+          {
+            "value": "1.3",
+            "label": "Landscape"
+          },
+          {
+            "value": "1",
+            "label": "Square"
+          },
+          {
+            "value": "0.8",
+            "label": "Portrait"
+          }
+        ],
+        "default": "1"
+      },
+      {
+        "type": "select",
+        "id": "text_alignment",
+        "label": "Text alignment",
+        "options": [
+          { "value": "text-left", "label": "Left"},
+          { "value": "text-center", "label": "Center"},
+          { "value": "text-right", "label": "Right"}
+        ],
+        "default":   "text-left"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "column",
+        "name": "Column",
+        "limit": 4,
+        "settings": [
+          {
+            "type": "checkbox",
+            "id": "show_image",
+            "label": "Show image",
+            "default": true
+          },
+          {
+            "id": "image",
+            "type": "image_picker",
+            "label": "Image"
+          },
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Heading"
+          },
+          {
+            "type": "richtext",
+            "id": "text",
+            "label": "Text",
+            "default": "<p>Share blog posts, products, or promotions with your customers. Use this text to describe products, share details on availability and style, or as a space to display recent reviews or FAQs.</p>"
+          },
+          {
+            "type":      "header",
+            "content":   "Call to action"
+          },
+          {
+            "type": "url",
+            "id": "cta_link",
+            "label": "Link"
+          },
+          {
+            "type": "text",
+            "id": "cta_text",
+            "label": "Text"
+          },
+          {
+            "type":      "header",
+            "content":   "Color"
+          },
+          {
+            "type": "select",
+            "id": "color_scheme",
+            "label": "Color scheme",
+            "options": [
+                { "value": "primary", "label": "Primary"},
+                { "value": "secondary", "label": "Secondary"},
+                { "value": "tertiary", "label": "Tertiary"}
+            ],
+            "default":   "primary"
+          }
+        ]
+      }
+    ],
+    "presets": [{
+        "name": "Text columns with images",
+        "blocks": [
+          {
+            "type": "column"
+          },
+          {
+            "type": "column"
+          },
+          {
+            "type": "column"
+          }
+        ]
+    }]
+  }
+{% endschema %}

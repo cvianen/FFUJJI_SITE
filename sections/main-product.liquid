@@ -258,7 +258,18 @@
   {% endunless %}
 
   <!-- Mobile sticky add-to-bag bar -->
-  <div class="lg:hidden" style="position:fixed; bottom:0; left:0; right:0; z-index:200; background:#fff; border-top:1px solid #e0e0e0;">
+  <div id="mobile-sticky-bar-{{ section.id }}" class="lg:hidden" style="position:fixed; bottom:0; left:0; right:0; z-index:200; background:#fff; border-top:1px solid #e0e0e0; transition:transform 0.25s ease; transform:translateY(0);">
+  <script>
+    (function() {
+      var bar = document.getElementById('mobile-sticky-bar-{{ section.id }}');
+      var atcBtn = document.getElementById('addToCartButton');
+      if (!bar || !atcBtn) return;
+      var obs = new IntersectionObserver(function(entries) {
+        bar.style.transform = entries[0].isIntersecting ? 'translateY(110%)' : 'translateY(0)';
+      }, { threshold: 0.1 });
+      obs.observe(atcBtn);
+    })();
+  </script>
     <div style="display:flex; align-items:center; gap:16px; padding:14px 16px 24px;">
 
       <!-- Left: product name + size picker -->

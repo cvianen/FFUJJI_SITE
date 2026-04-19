@@ -41,7 +41,9 @@
   assign desktop_grid_class = 'lg:grid-cols-' | append: grid_cols
 -%}
 
-<section class="featured-collection border-t-grid border-grid-color" data-color-scheme="{{ section_color }}">
+<section class="featured-collection border-t-grid border-grid-color" data-color-scheme="{{ section_color }}"
+  x-data="FeaturedCollectionSticky_{{ section.id | handleize | replace: '-', '_' }}()"
+  x-init="init()">
   {% if section.settings.title != '' %}
     {%- render 'section-title',
       title: section.settings.title,
@@ -56,7 +58,14 @@
     <ul class="grid grid-cols-2 {{ desktop_grid_class }} gap-gutter bg-border">
       {% for product in collection.products limit: product_limit %}
         {%- assign counter = counter | plus: 1 -%}
-        <li class="{{ mobile_col_span }} {{ desktop_col_span }} bg-scheme-background text-scheme-text">
+        <li class="{{ mobile_col_span }} {{ desktop_col_span }} bg-scheme-background text-scheme-text"
+            x-on:mouseenter="setProduct($el)"
+            data-title="{{ product.title | escape }}"
+            data-image="{{ product.featured_image | image_url: width: 120 }}"
+            data-price="{% if settings.currency_code_enabled == true %}{{ product.price | money_with_currency }}{% else %}{{ product.price | money }}{% endif %}"
+            data-variant-id="{{ product.first_available_variant.id }}"
+            data-variant-title="{{ product.first_available_variant.title | escape }}"
+            data-available="{{ product.available }}">
           {%- render 'product-grid-item',
               product: product,
               section_color: section_color,
@@ -89,7 +98,7 @@
           assign col_span = grid_cols | divided_by: products_per_row
           assign placeholder_width = products_per_row | minus: items_on_last_row | times: col_span
           assign items_on_last_row_mobile = counter | modulo: products_per_row_mobile
-          assign col_span_mobile = 2 | divided_by: products_per_row_mobile 
+          assign col_span_mobile = 2 | divided_by: products_per_row_mobile
           assign placeholder_width_mobile = products_per_row_mobile | minus: items_on_last_row_mobile | times: col_span_mobile
         -%}
         {%- if items_on_last_row != 0 -%}
@@ -109,7 +118,109 @@
     link_url: collection.url,
     section_color: section_color
   -%}
+
+  <!-- Sticky quick-add bar -->
+  <div
+    x-show="visible && currentProduct !== null"
+    x-transition:enter="transition-transform duration-300 ease-out"
+    x-transition:enter-start="translate-y-full"
+    x-transition:enter-end="translate-y-0"
+    x-transition:leave="transition-transform duration-200 ease-in"
+    x-transition:leave-start="translate-y-0"
+    x-transition:leave-end="translate-y-full"
+    style="display:none; position:fixed; bottom:0; left:0; right:0; z-index:100;"
+    data-color-scheme="{{ section_color }}"
+    class="bg-scheme-background text-scheme-text border-t-grid border-grid-color">
+    <div class="flex items-center section-x-padding py-3 gap-4">
+      <img :src="currentProduct && currentProduct.image" :alt="currentProduct && currentProduct.title"
+           style="width:48px; height:48px; object-fit:cover; flex-shrink:0;">
+      <div style="flex:1; min-width:0; overflow:hidden;">
+        <p style="font-size:0.875rem; font-weight:500; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;" x-text="currentProduct && currentProduct.title"></p>
+        <p style="font-size:0.75rem; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;"
+           class="text-scheme-meta"
+           x-show="currentProduct && currentProduct.variantTitle && currentProduct.variantTitle !== 'Default Title'"
+           x-text="currentProduct && currentProduct.variantTitle"></p>
+      </div>
+      <p style="font-size:0.875rem; font-weight:500; flex-shrink:0;" x-text="currentProduct && currentProduct.price"></p>
+      <button
+        x-on:click="addToCart()"
+        :disabled="loading || (currentProduct && currentProduct.available === 'false')"
+        style="flex-shrink:0; padding:0.75rem 1.5rem; font-size:0.7rem; letter-spacing:0.1em; text-transform:uppercase; font-weight:500; cursor:pointer; background-color:var(--color-scheme-text, #030303); color:var(--color-scheme-background, #ffffff); border:none; transition:opacity 0.2s;"
+        :style="(loading || (currentProduct && currentProduct.available === 'false')) ? 'opacity:0.5;' : 'opacity:1;'">
+        <span x-show="!loading">ADD TO BAG</span>
+        <span x-show="loading">&bull; &bull; &bull;</span>
+      </button>
+    </div>
+  </div>
 </section>
+
+<script>
+  function FeaturedCollectionSticky_{{ section.id | handleize | replace: '-', '_' }}() {
+    return {
+      visible: false,
+      currentProduct: null,
+      loading: false,
+      _scrollHandler: null,
+
+      init() {
+        const firstLi = this.$el.querySelector('[data-variant-id]');
+        if (firstLi) this.setProduct(firstLi);
+
+        const update = () => {
+          const rect = this.$el.getBoundingClientRect();
+          const footer = document.querySelector('footer');
+          const footerRect = footer ? footer.getBoundingClientRect() : null;
+          const sectionVisible = rect.bottom > 0 && rect.top < window.innerHeight;
+          const footerVisible = footerRect ? footerRect.top < window.innerHeight : false;
+          this.visible = sectionVisible && !footerVisible;
+        };
+
+        this._scrollHandler = update;
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+      },
+
+      destroy() {
+        if (this._scrollHandler) {
+          window.removeEventListener('scroll', this._scrollHandler);
+        }
+      },
+
+      setProduct(el) {
+        this.currentProduct = {
+          title: el.dataset.title,
+          image: el.dataset.image,
+          price: el.dataset.price,
+          variantId: el.dataset.variantId,
+          variantTitle: el.dataset.variantTitle,
+          available: el.dataset.available
+        };
+      },
+
+      addToCart() {
+        if (this.loading || !this.currentProduct || this.currentProduct.available === 'false') return;
+        this.loading = true;
+        fetch(window.theme.routes.cart_add_url + '.js', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          body: JSON.stringify({ id: parseInt(this.currentProduct.variantId), quantity: 1 })
+        })
+        .then((r) => r.json())
+        .then(() => {
+          document.dispatchEvent(new CustomEvent('cart:open'));
+          document.dispatchEvent(new CustomEvent('theme:cart:change'));
+          return fetch(window.theme.routes.cart_url + '.js').then((r) => r.json());
+        })
+        .then((cart) => {
+          document.querySelectorAll('[data-cart-count]').forEach((el) => {
+            el.textContent = cart.item_count;
+          });
+        })
+        .finally(() => { this.loading = false; });
+      }
+    };
+  }
+</script>
 
 {% schema %}
   {

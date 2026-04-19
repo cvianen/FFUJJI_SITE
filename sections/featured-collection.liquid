@@ -54,9 +54,14 @@
 
   <style>
     @media (max-width: 1023px) {
+      #fc-section-{{ section.id }},
+      #fc-section-{{ section.id }} > div {
+        overflow: visible !important;
+      }
       #fc-list-{{ section.id }} {
         display: flex !important;
         overflow-x: auto;
+        overflow-y: visible;
         scroll-snap-type: x mandatory;
         -webkit-overflow-scrolling: touch;
         scrollbar-width: none;
@@ -66,8 +71,10 @@
       }
       #fc-list-{{ section.id }}::-webkit-scrollbar { display: none; }
       #fc-list-{{ section.id }} > li {
-        flex: 0 0 88vw !important;
-        max-width: 88vw !important;
+        flex: 0 0 84vw !important;
+        width: 84vw !important;
+        min-width: 84vw !important;
+        max-width: 84vw !important;
         scroll-snap-align: start;
         border: none !important;
       }

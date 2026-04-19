@@ -259,42 +259,49 @@
 
   <!-- Mobile sticky add-to-bag bar -->
   <div class="lg:hidden" style="position:fixed; bottom:0; left:0; right:0; z-index:200; background:#fff; border-top:1px solid #e0e0e0;">
-    <div style="padding:10px 16px 18px;">
+    <div style="display:flex; align-items:center; gap:12px; padding:10px 16px 18px;">
 
-      {%- comment -%}Size picker — only shows when product has a Size/Maat option{%- endcomment -%}
-      {% for option in product.options_with_values %}
-        {%- assign opt_lower = option.name | downcase -%}
-        {% if opt_lower == 'size' or opt_lower == 'maat' or opt_lower == 'sizes' %}
-          {%- assign size_opt_index = forloop.index0 -%}
-          <div style="display:flex; gap:6px; flex-wrap:wrap; margin-bottom:10px; overflow-x:auto; padding-bottom:2px;">
-            {% for value in option.values %}
-              {%- assign val_handle = value | handleize -%}
-              {%- assign size_available = false -%}
-              {%- for variant in product.variants -%}
-                {%- if variant.options[size_opt_index] == value and variant.available -%}
-                  {%- assign size_available = true -%}
-                  {%- break -%}
-                {%- endif -%}
-              {%- endfor -%}
-              <button
-                type="button"
-                style="padding:6px 14px; border:1px solid #ccc; font-size:0.72rem; letter-spacing:0.05em; text-transform:uppercase; background:#fff; cursor:pointer; white-space:nowrap; flex-shrink:0; transition:border-color 0.15s, font-weight 0.15s; {% unless size_available %}opacity:0.35; text-decoration:line-through;{% endunless %}"
-                :style="optionHandles[{{ size_opt_index }}] === '{{ val_handle }}' ? 'border-color:#030303; font-weight:600;' : 'border-color:#ccc; font-weight:400;'"
-                {% unless size_available %}disabled{% endunless %}
-                onclick="var r=document.querySelector('input[name=\'options[{{ option.name | escape }}\'][value=\'{{ value | replace: "'", "\\'" | escape }}\']'); if(r&&!r.checked){r.click();}">
-                {{ value }}
-              </button>
-            {% endfor %}
-          </div>
-        {% endif %}
-      {% endfor %}
+      <!-- Left: product name + size picker -->
+      <div style="flex:1; min-width:0;">
+        <p style="font-size:0.75rem; font-weight:600; letter-spacing:0.04em; text-transform:uppercase; margin:0 0 6px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; color:#030303;">
+          {{ product.title }}
+        </p>
 
-      {%- comment -%}Add to bag button{%- endcomment -%}
+        {%- comment -%}Size picker{%- endcomment -%}
+        {% for option in product.options_with_values %}
+          {%- assign opt_lower = option.name | downcase -%}
+          {% if opt_lower == 'size' or opt_lower == 'maat' or opt_lower == 'sizes' %}
+            {%- assign size_opt_index = forloop.index0 -%}
+            <div style="display:flex; gap:5px; flex-wrap:nowrap; overflow-x:auto; padding-bottom:2px;">
+              {% for value in option.values %}
+                {%- assign val_handle = value | handleize -%}
+                {%- assign size_available = false -%}
+                {%- for variant in product.variants -%}
+                  {%- if variant.options[size_opt_index] == value and variant.available -%}
+                    {%- assign size_available = true -%}
+                    {%- break -%}
+                  {%- endif -%}
+                {%- endfor -%}
+                <button
+                  type="button"
+                  style="padding:4px 10px; border:1px solid #ccc; font-size:0.65rem; letter-spacing:0.05em; text-transform:uppercase; background:#fff; cursor:pointer; white-space:nowrap; flex-shrink:0; {% unless size_available %}opacity:0.35; text-decoration:line-through;{% endunless %}"
+                  :style="optionHandles[{{ size_opt_index }}] === '{{ val_handle }}' ? 'border-color:#030303; font-weight:700;' : 'border-color:#ccc; font-weight:400;'"
+                  {% unless size_available %}disabled{% endunless %}
+                  onclick="var r=document.querySelector('input[name=\'options[{{ option.name | escape }}\'][value=\'{{ value | replace: "'", "\\'" | escape }}\']'); if(r&&!r.checked){r.click();}">
+                  {{ value }}
+                </button>
+              {% endfor %}
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+
+      <!-- Right: ADD TO BAG button -->
       <button
         type="button"
         onclick="var btn=document.getElementById('addToCartButton'); if(btn&&!btn.disabled){btn.click();}"
         :disabled="!currentVariantAvailable || loading"
-        style="width:100%; padding:13px 16px; font-size:0.72rem; letter-spacing:0.12em; text-transform:uppercase; font-weight:500; background:#030303; color:#fff; border:none; cursor:pointer; transition:opacity 0.2s;"
+        style="flex-shrink:0; padding:12px 18px; font-size:0.65rem; letter-spacing:0.12em; text-transform:uppercase; font-weight:500; background:#030303; color:#fff; border:none; cursor:pointer; transition:opacity 0.2s;"
         :style="(!currentVariantAvailable || loading) ? 'opacity:0.45; cursor:not-allowed;' : 'opacity:1; cursor:pointer;'">
         <span x-show="!loading && currentVariantAvailable">ADD TO BAG</span>
         <span x-show="!loading && !currentVariantAvailable">SOLD OUT</span>

@@ -291,7 +291,7 @@
                 {%- endfor -%}
                 <button
                   type="button"
-                  style="padding:4px 10px; border:1px solid #ccc; font-size:0.65rem; letter-spacing:0.05em; text-transform:uppercase; background:#fff; white-space:nowrap; flex-shrink:0; {% if size_available %}cursor:pointer;{% else %}cursor:not-allowed; opacity:0.3; text-decoration:line-through; color:#999;{% endif %}"
+                  style="padding:4px 10px; border:1px solid #ccc; font-size:0.65rem; letter-spacing:0.05em; text-transform:uppercase; background:#fff; white-space:nowrap; flex-shrink:0; {% unless size_available %}opacity:0.3; text-decoration:line-through;{% endunless %}"
                   :style="optionHandles[{{ size_opt_index }}] === '{{ val_handle }}' ? 'border-color:#030303; font-weight:700;' : 'border-color:#ccc; font-weight:400;'"
                   {% unless size_available %}disabled{% endunless %}
                   onclick="(function(){var e=document.getElementById('Section-{{ section.id }}-Option{{ option.position }}-{{ value | escape }}')||document.getElementById('Option{{ option.position }}-{{ value | escape }}');if(e&&!e.checked)e.click();})()">

@@ -52,8 +52,30 @@
     -%}
   {% endif %}
 
+  <style>
+    @media (max-width: 1023px) {
+      #fc-list-{{ section.id }} {
+        display: flex !important;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        gap: 0 !important;
+        background: transparent !important;
+      }
+      #fc-list-{{ section.id }}::-webkit-scrollbar { display: none; }
+      #fc-list-{{ section.id }} > li {
+        flex: 0 0 82vw !important;
+        max-width: 82vw !important;
+        scroll-snap-align: start;
+        border-right: 1px solid var(--color-border);
+      }
+      #fc-list-{{ section.id }} > li[aria-hidden="true"] { display: none !important; }
+    }
+  </style>
+
   <div class="bg-scheme-background">
-    <ul class="grid grid-cols-2 {{ desktop_grid_class }} gap-gutter bg-border">
+    <ul id="fc-list-{{ section.id }}" class="grid grid-cols-2 {{ desktop_grid_class }} gap-gutter bg-border">
       {% for product in collection.products limit: product_limit %}
         {%- assign counter = counter | plus: 1 -%}
         <li class="{{ mobile_col_span }} {{ desktop_col_span }} bg-scheme-background text-scheme-text fc-product-item"

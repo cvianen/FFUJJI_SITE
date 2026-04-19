@@ -54,22 +54,15 @@
 
   <style>
     @media (max-width: 1023px) {
-      #fc-section-{{ section.id }},
-      #fc-section-{{ section.id }} > div {
-        overflow: visible !important;
-      }
+      #fc-scroll-{{ section.id }}::-webkit-scrollbar { display: none; }
       #fc-list-{{ section.id }} {
         display: flex !important;
-        overflow-x: auto;
-        overflow-y: visible;
-        scroll-snap-type: x mandatory;
-        -webkit-overflow-scrolling: touch;
-        scrollbar-width: none;
+        overflow: visible !important;
+        width: max-content !important;
         gap: 8px !important;
         background: transparent !important;
         padding: 0 !important;
       }
-      #fc-list-{{ section.id }}::-webkit-scrollbar { display: none; }
       #fc-list-{{ section.id }} > li {
         flex: 0 0 84vw !important;
         width: 84vw !important;
@@ -80,9 +73,12 @@
       }
       #fc-list-{{ section.id }} > li[aria-hidden="true"] { display: none !important; }
     }
+    @media (min-width: 1024px) {
+      #fc-scroll-{{ section.id }} { overflow: visible !important; }
+    }
   </style>
 
-  <div class="bg-scheme-background">
+  <div id="fc-scroll-{{ section.id }}" class="bg-scheme-background" style="overflow-x:auto; overflow-y:visible; scroll-snap-type:x mandatory; -webkit-overflow-scrolling:touch; scrollbar-width:none;">
     <ul id="fc-list-{{ section.id }}" class="grid grid-cols-2 {{ desktop_grid_class }} gap-gutter bg-border">
       {% for product in collection.products limit: product_limit %}
         {%- assign counter = counter | plus: 1 -%}

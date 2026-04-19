@@ -282,13 +282,12 @@
             <div style="display:flex; gap:5px; flex-wrap:nowrap; overflow-x:auto; padding-bottom:2px;">
               {% for value in option.values %}
                 {%- assign val_handle = value | handleize -%}
-                {%- assign size_available = false -%}
-                {%- for variant in product.variants -%}
-                  {%- if variant.options[size_opt_index] == value and variant.available -%}
-                    {%- assign size_available = true -%}
-                    {%- break -%}
-                  {%- endif -%}
-                {%- endfor -%}
+                {%- assign size_available = true -%}
+                {%- if product.options.size == 1 -%}
+                  {%- unless product.variants[forloop.index0].available -%}
+                    {%- assign size_available = false -%}
+                  {%- endunless -%}
+                {%- endif -%}
                 <button
                   type="button"
                   style="padding:4px 10px; border:1px solid #ccc; font-size:0.65rem; letter-spacing:0.05em; text-transform:uppercase; background:#fff; white-space:nowrap; flex-shrink:0; {% unless size_available %}text-decoration:line-through;{% endunless %}"

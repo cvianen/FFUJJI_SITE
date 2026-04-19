@@ -46,7 +46,7 @@
                       x-bind:aria-expanded="accordionOpen.accordion{{ counter }}? true: 'false'"
                       @click="accordionOpen.accordion{{ counter }} = !accordionOpen.accordion{{ counter }}"
                       aria-controls="accordion{{ counter }}">
-                {{ link.title }}
+                {%- if link.title == 'SALE' or link.title == 'Sale' -%}<span class="text-scheme-accent">{{ link.title }}</span>{%- else -%}{{ link.title }}{%- endif -%}
                 <span class="absolute right-0 w-5 top-1/2 transform -translate-y-1/2 flex items-center">
                   {%- if section.settings.icon == 'chevron' -%}
                     <span class="inline-block transform transition origin-center" :class="{'rotate-180': accordionOpen.accordion{{ counter }}}">
@@ -113,7 +113,7 @@
                 {%- endfor -%}
               </ul>
             {%- else -%}
-              <a class="{{ link_class }}" href="{{ link.url }}">
+              <a class="{{ link_class }}{% if link.title == 'SALE' or link.title == 'Sale' %} text-scheme-accent{% endif %}" href="{{ link.url }}">
                 {{ link.title }}
               </a>
             {%- endif -%}

@@ -262,8 +262,15 @@
     <div style="display:flex; align-items:center; gap:16px; padding:14px 16px 24px;">
 
       <!-- Left: product name + size picker -->
-      <div style="flex:1; min-width:0;">
-        <p style="font-size:0.75rem; font-weight:600; letter-spacing:0.04em; text-transform:uppercase; margin:0 0 8px; line-height:1.4; color:#030303;">
+      {%- assign has_size_option = false -%}
+      {%- for option in product.options_with_values -%}
+        {%- assign opt_lower_check = option.name | downcase -%}
+        {%- if opt_lower_check == 'size' or opt_lower_check == 'maat' or opt_lower_check == 'sizes' -%}
+          {%- assign has_size_option = true -%}
+        {%- endif -%}
+      {%- endfor -%}
+      <div style="flex:1; min-width:0; {% unless has_size_option %}display:flex; align-items:center;{% endunless %}">
+        <p style="font-size:0.75rem; font-weight:600; letter-spacing:0.04em; text-transform:uppercase; margin:{% if has_size_option %}0 0 8px{% else %}0{% endif %}; line-height:1.4; color:#030303;">
           {{ product.title }}
         </p>
 

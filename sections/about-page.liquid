@@ -1,0 +1,120 @@
+{%- assign section_color = section.settings.color_scheme -%}
+
+<style>
+  @font-face {
+    font-family: 'Dragonfly';
+    src: url('https://cdn.shopify.com/s/files/1/0757/0024/0714/files/DRAGONFLY.ttf?v=1777660686') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  .about-page-wrap {
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+  }
+
+  .about-page-inner {
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .about-page-signature {
+    font-family: 'Dragonfly', cursive;
+    font-size: 2rem;
+    line-height: 1.4;
+  }
+
+  @media (min-width: 1024px) {
+    .about-page-wrap {
+      padding-top: 8rem;
+      padding-bottom: 8rem;
+    }
+
+    .about-page-signature {
+      font-size: 2.5rem;
+    }
+  }
+</style>
+
+<section class="text-scheme-text bg-scheme-background" data-color-scheme="{{ section_color }}">
+  <div class="section-x-padding about-page-wrap text-center">
+    <div class="about-page-inner">
+
+      <h1 class="font-heading text-xl uppercase">
+        {{ section.settings.title }}
+      </h1>
+
+      <p class="font-body text-lg mt-8">
+        {{ section.settings.paragraph_1 }}
+      </p>
+
+      <p class="font-body text-lg mt-8">
+        {{ section.settings.paragraph_2 }}
+      </p>
+
+      <p class="about-page-signature mt-8">
+        {{ section.settings.signature }}
+      </p>
+
+      <p class="font-heading text-base mt-8">
+        {{ section.settings.copyright }}
+      </p>
+
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "About Page",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "FFUJJI 2023 FOUNDED IN THE NETHERLANDS"
+    },
+    {
+      "type": "textarea",
+      "id": "paragraph_1",
+      "label": "First paragraph",
+      "default": "The vision of FFUJJI is to revolutionize the streetwear industry by infusing the essence of the great outdoors with our garments. We are committed in creating a unique clothing brand that seamlessly blends the urban street culture with the spirit of adventure and exploration found in outdoor environments."
+    },
+    {
+      "type": "textarea",
+      "id": "paragraph_2",
+      "label": "Second paragraph",
+      "default": "Each individual faces challenges. It is up to you to either climb that mountain or stay down, because it never sleeps."
+    },
+    {
+      "type": "text",
+      "id": "signature",
+      "label": "Handwriting text",
+      "default": "the mountain never sleeps"
+    },
+    {
+      "type": "text",
+      "id": "copyright",
+      "label": "Copyright",
+      "default": "©FFUJJI"
+    },
+    {
+      "type": "header",
+      "content": "Color"
+    },
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "options": [
+        { "value": "primary", "label": "Primary" },
+        { "value": "secondary", "label": "Secondary" },
+        { "value": "tertiary", "label": "Tertiary" }
+      ],
+      "default": "primary"
+    }
+  ]
+}
+{% endschema %}

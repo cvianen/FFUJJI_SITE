@@ -1,4 +1,7 @@
 {%- assign section_color = section.settings.color_scheme -%}
+{%- assign about_font = section.settings.custom_font -%}
+
+{{ about_font | font_face: font_display: 'swap' }}
 
 <style>
   @font-face {
@@ -18,6 +21,12 @@
     max-width: 700px;
     margin-left: auto;
     margin-right: auto;
+  }
+
+  .about-page-custom-font {
+    font-family: {{ about_font.family }}, {{ about_font.fallback_families }};
+    font-weight: {{ about_font.weight }};
+    font-style: {{ about_font.style }};
   }
 
   .about-page-signature {
@@ -42,15 +51,15 @@
   <div class="section-x-padding about-page-wrap text-center">
     <div class="about-page-inner">
 
-      <h1 class="font-heading text-xl uppercase">
+      <h1 class="about-page-custom-font text-xl uppercase">
         {{ section.settings.title }}
       </h1>
 
-      <p class="font-heading text-lg mt-8">
+      <p class="about-page-custom-font text-lg mt-8">
         {{ section.settings.paragraph_1 }}
       </p>
 
-      <p class="font-heading text-lg mt-8">
+      <p class="about-page-custom-font text-lg mt-8">
         {{ section.settings.paragraph_2 }}
       </p>
 
@@ -58,7 +67,7 @@
         {{ section.settings.signature }}
       </p>
 
-      <p class="font-heading text-base mt-8">
+      <p class="about-page-custom-font text-base mt-8">
         {{ section.settings.copyright }}
       </p>
 
@@ -70,6 +79,12 @@
 {
   "name": "About Page",
   "settings": [
+    {
+      "type": "font_picker",
+      "id": "custom_font",
+      "label": "Font",
+      "default": "neue_haas_unica_n4"
+    },
     {
       "type": "text",
       "id": "title",

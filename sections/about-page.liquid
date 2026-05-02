@@ -1,7 +1,11 @@
 {%- assign section_color = section.settings.color_scheme -%}
 {%- assign about_font = section.settings.custom_font -%}
-
-{{ about_font | font_face: font_display: 'swap' }}
+{%- assign use_theme_font = false -%}
+{%- if about_font.family == blank -%}
+  {%- assign use_theme_font = true -%}
+{%- else -%}
+  {{ about_font | font_face: font_display: 'swap' }}
+{%- endif -%}
 
 <style>
   @font-face {
@@ -24,9 +28,15 @@
   }
 
   .about-page-custom-font {
-    font-family: {{ about_font.family }}, {{ about_font.fallback_families }};
-    font-weight: {{ about_font.weight }};
-    font-style: {{ about_font.style }};
+    {%- if use_theme_font -%}
+      font-family: var(--heading-font-stack);
+      font-weight: var(--heading-font-weight);
+      font-style: var(--heading-font-style);
+    {%- else -%}
+      font-family: {{ about_font.family }}, {{ about_font.fallback_families }};
+      font-weight: {{ about_font.weight }};
+      font-style: {{ about_font.style }};
+    {%- endif -%}
   }
 
   .about-page-signature {

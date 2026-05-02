@@ -1,13 +1,11 @@
 {%- assign section_color = section.settings.color_scheme -%}
 {%- assign about_font = section.settings.custom_font -%}
-{%- assign use_theme_font = false -%}
-{%- if about_font.family == blank -%}
-  {%- assign use_theme_font = true -%}
-{%- else -%}
-  {{ about_font | font_face: font_display: 'swap' }}
-{%- endif -%}
 
 <style>
+  {%- unless about_font.family == blank -%}
+    {{ about_font | font_face: font_display: 'swap' }}
+  {%- endunless -%}
+
   @font-face {
     font-family: 'Dragonfly';
     src: url('https://cdn.shopify.com/s/files/1/0757/0024/0714/files/DRAGONFLY.ttf?v=1777660686') format('truetype');
@@ -28,7 +26,7 @@
   }
 
   .about-page-custom-font {
-    {%- if use_theme_font -%}
+    {%- if about_font.family == blank -%}
       font-family: var(--heading-font-stack);
       font-weight: var(--heading-font-weight);
       font-style: var(--heading-font-style);

@@ -1,1 +1,28 @@
-{"sections":{"about_content":{"type":"about-page","settings":{"title":"FFUJJI 2023 FOUNDED IN THE NETHERLANDS","paragraph_1":"The vision of FFUJJI is to revolutionize the streetwear industry by infusing the essence of the great outdoors with our garments. We are committed in creating a unique clothing brand that seamlessly blends the urban street culture with the spirit of adventure and exploration found in outdoor environments.","paragraph_2":"Each individual faces challenges. It is up to you to either climb that mountain or stay down, because it never sleeps.","signature":"the mountain never sleeps","copyright":"©FFUJJI","color_scheme":"primary","custom_font":"neue_haas_unica_n4"}}},"order":["about_content"]}
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "about_content": {
+      "type": "about-page",
+      "settings": {
+        "custom_font": "instrument_sans_n4",
+        "title": "FFUJJI 2023 FOUNDED IN THE NETHERLANDS",
+        "paragraph_1": "The vision of FFUJJI is to revolutionize the industry by infusing the essence of the great outdoors with our garments. We are committed in creating a unique brand that seamlessly blends the urban street culture with the spirit of adventure and exploration found in outdoor environments.",
+        "paragraph_2": "Each individual faces challenges. It is up to you to either climb that mountain or stay down, because it never sleeps.",
+        "signature": "the mountain never sleeps",
+        "copyright": "©FFUJJI",
+        "color_scheme": "primary"
+      }
+    }
+  },
+  "order": [
+    "about_content"
+  ]
+}

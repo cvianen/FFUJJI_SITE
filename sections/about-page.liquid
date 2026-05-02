@@ -1,6 +1,9 @@
 {%- assign section_color = section.settings.color_scheme -%}
+{%- assign about_heading_font = settings.font_heading -%}
 
 <style>
+  {{ about_heading_font | font_face: font_display: 'swap' }}
+
   @font-face {
     font-family: 'Dragonfly';
     src: url('https://cdn.shopify.com/s/files/1/0757/0024/0714/files/DRAGONFLY.ttf?v=1777660686') format('truetype');
@@ -18,6 +21,14 @@
     max-width: 700px;
     margin-left: auto;
     margin-right: auto;
+  }
+
+  .about-page-text {
+    font-family: {{ about_heading_font.family }}, {{ about_heading_font.fallback_families }};
+    font-weight: {{ about_heading_font.weight }};
+    font-style: {{ about_heading_font.style }};
+    text-transform: uppercase;
+    letter-spacing: 0;
   }
 
   .about-page-signature {
@@ -42,15 +53,15 @@
   <div class="section-x-padding about-page-wrap text-center">
     <div class="about-page-inner">
 
-      <h1 class="font-heading text-xl uppercase">
+      <h1 class="about-page-text text-xl">
         {{ section.settings.title }}
       </h1>
 
-      <p class="font-heading text-lg mt-8">
+      <p class="about-page-text text-lg mt-8">
         {{ section.settings.paragraph_1 }}
       </p>
 
-      <p class="font-heading text-lg mt-8">
+      <p class="about-page-text text-lg mt-8">
         {{ section.settings.paragraph_2 }}
       </p>
 
@@ -58,7 +69,7 @@
         {{ section.settings.signature }}
       </p>
 
-      <p class="font-heading text-base mt-8">
+      <p class="about-page-text text-base mt-8">
         {{ section.settings.copyright }}
       </p>
 

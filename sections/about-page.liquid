@@ -1,9 +1,6 @@
 {%- assign section_color = section.settings.color_scheme -%}
-{%- assign about_heading_font = settings.font_heading -%}
 
 <style>
-  {{ about_heading_font | font_face: font_display: 'swap' }}
-
   @font-face {
     font-family: 'Dragonfly';
     src: url('https://cdn.shopify.com/s/files/1/0757/0024/0714/files/DRAGONFLY.ttf?v=1777660686') format('truetype');
@@ -24,11 +21,11 @@
   }
 
   .about-page-text {
-    font-family: {{ about_heading_font.family }}, {{ about_heading_font.fallback_families }};
-    font-weight: {{ about_heading_font.weight }};
-    font-style: {{ about_heading_font.style }};
-    text-transform: uppercase;
-    letter-spacing: 0;
+    font-family: var(--heading-font-stack) !important;
+    font-weight: var(--heading-font-weight) !important;
+    font-style: var(--heading-font-style) !important;
+    text-transform: var(--heading-capitalize) !important;
+    letter-spacing: var(--heading-letterspacing) !important;
   }
 
   .about-page-signature {

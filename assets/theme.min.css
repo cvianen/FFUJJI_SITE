@@ -163,20 +163,21 @@ body:not(#projects) .border-r-grid {
   border: none !important;
 }
 
-/* --- Grid: meer lucht --- */
-.collection-list,
-.featured-collection__grid {
-  background: transparent !important;
-  gap: 3rem 2.5rem !important;
-}
-.collection-list li,
-.featured-collection__grid li {
-  background: transparent !important;
-}
-/* --- Meer witruimte rondom de collectiepagina grid --- */
-.template-collection .collection-list,
-.template-collection .featured-collection__grid {
-  padding: 1.5rem !important;
+/* --- Grid: meer lucht (mobile only) --- */
+@media (max-width: 1023px) {
+  .collection-list,
+  .featured-collection__grid {
+    background: transparent !important;
+    gap: 1rem !important;
+  }
+  .collection-list li,
+  .featured-collection__grid li {
+    background: transparent !important;
+  }
+  .template-collection .collection-list,
+  .template-collection .featured-collection__grid {
+    padding: 1.5rem !important;
+  }
 }
 
 /* --- Productkaart: geen padding rondom foto --- */

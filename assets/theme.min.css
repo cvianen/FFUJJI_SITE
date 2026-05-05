@@ -176,7 +176,7 @@ body:not(#projects) .border-r-grid {
 /* --- Meer witruimte rondom de collectiepagina grid --- */
 .template-collection .collection-list,
 .template-collection .featured-collection__grid {
-  padding: 2.5rem !important;
+  padding: 1.5rem !important;
 }
 
 /* --- Productkaart: geen padding rondom foto --- */

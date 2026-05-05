@@ -326,6 +326,21 @@ body:not(#projects) .border-r-grid {
   background: transparent !important;
 }
 
+/* --- Cart drawer: white background, desktop left border --- */
+#CartContainer {
+  background: #ffffff !important;
+}
+@media (min-width: 1024px) {
+  #CartContainer {
+    border-left: 1px solid #030303 !important;
+  }
+}
+@media (max-width: 1023px) {
+  #CartContainer {
+    border-left: none !important;
+  }
+}
+
 /* --- Icon list als bordered info blok --- */
 .product-icon-list-box {
   border: 1px solid #e0e0e0;

@@ -164,6 +164,10 @@ body:not(#projects) .border-r-grid {
 }
 
 /* --- Grid: meer lucht (mobile only) --- */
+.template-collection .collection-list,
+.template-collection .featured-collection__grid {
+  padding: 2.5rem !important;
+}
 @media (max-width: 1023px) {
   .collection-list,
   .featured-collection__grid {

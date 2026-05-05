@@ -332,7 +332,7 @@ body:not(#projects) .border-r-grid {
   background: #ffffff !important;
 }
 @media (min-width: 1024px) {
-  #CartContainer {
+  body:not(#projects) #CartContainer {
     border-left: 3px solid #030303 !important;
     border-top: none !important;
     border-right: none !important;
@@ -340,8 +340,8 @@ body:not(#projects) .border-r-grid {
   }
 }
 @media (max-width: 1023px) {
-  #CartContainer {
-    border-left: none !important;
+  body:not(#projects) #CartContainer {
+    border: none !important;
   }
 }
 

@@ -333,7 +333,10 @@ body:not(#projects) .border-r-grid {
 }
 @media (min-width: 1024px) {
   #CartContainer {
-    border-left: 1px solid #030303 !important;
+    border-left: 3px solid #030303 !important;
+    border-top: none !important;
+    border-right: none !important;
+    border-bottom: none !important;
   }
 }
 @media (max-width: 1023px) {

@@ -54,7 +54,7 @@
 
   <style>
     @media (max-width: 1023px) {
-      #fc-scroll-{{ section.id }} { padding-left: 16px; scroll-padding-left: 16px; }
+      #fc-scroll-{{ section.id }} { scroll-padding-left: 16px; }
       #fc-scroll-{{ section.id }}::-webkit-scrollbar { display: none; }
       #fc-list-{{ section.id }} {
         display: flex !important;
@@ -62,7 +62,7 @@
         width: max-content !important;
         gap: 8px !important;
         background: transparent !important;
-        padding: 0 !important;
+        padding: 0 0 0 16px !important;
       }
       #fc-list-{{ section.id }} > li {
         flex: 0 0 84vw !important;

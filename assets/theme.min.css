@@ -327,7 +327,8 @@ body:not(#projects) .border-r-grid {
 }
 
 /* --- Cart drawer: white background, desktop left border --- */
-#CartContainer {
+#CartContainer,
+#CartContainer .bg-scheme-background {
   background: #ffffff !important;
 }
 @media (min-width: 1024px) {

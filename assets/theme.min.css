@@ -297,6 +297,9 @@ body:not(#projects) .border-r-grid {
     padding-left: 1rem !important;
     padding-right: 1rem !important;
   }
+  .product-description-below .rte {
+    max-width: 100% !important;
+  }
 }
 .product-description-below .rte {
   font-size: 1rem !important;

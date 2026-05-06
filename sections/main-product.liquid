@@ -219,7 +219,7 @@
 
   {%- assign _desc_intro = product.description | split: '<h3>' | first -%}
   {%- if _desc_intro != blank -%}
-  <div class="hidden lg:block lg:col-span-12 bg-scheme-background text-scheme-text">
+  <div class="block lg:col-span-12 bg-scheme-background text-scheme-text">
     <div class="section-x-padding product-description-below pt-16 pb-theme">
       <div class="rte" style="max-width: {{ desc_max_width }}">{{ _desc_intro }}</div>
     </div>

@@ -302,7 +302,7 @@
                 <button
                   type="button"
                   class="{% unless size_available %}line-through{% endunless %}"
-                  style="padding:4px 10px; border:1px solid #ccc; font-size:0.75rem; font-weight:500; letter-spacing:0.12em; text-transform:uppercase; font-family:var(--heading-font-stack); background:#fff; white-space:nowrap; flex-shrink:0;"
+                  style="padding:4px 10px; border:1px solid #ccc; font-size:1.1rem; font-weight:500; letter-spacing:0.12em; text-transform:uppercase; font-family:var(--heading-font-stack); background:#fff; white-space:nowrap; flex-shrink:0;"
                   :style="optionHandles[{{ size_opt_index }}] === '{{ val_handle }}' ? 'border-color:#030303; font-weight:700;' : 'border-color:#ccc; font-weight:400;'"
                   {% unless size_available %}disabled{% endunless %}
                   onclick="(function(){var e=document.getElementById('Section-{{ section.id }}-Option{{ option.position }}-{{ value | escape }}')||document.getElementById('Option{{ option.position }}-{{ value | escape }}');if(e&&!e.checked)e.click();})()">

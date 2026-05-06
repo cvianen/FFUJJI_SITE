@@ -294,8 +294,8 @@ body:not(#projects) .border-r-grid {
 }
 @media (max-width: 1023px) {
   .product-description-below {
-    padding-left: 1rem !important;
-    padding-right: 1rem !important;
+    padding-left: 1.5rem !important;
+    padding-right: 1.5rem !important;
   }
   .product-description-below .rte {
     max-width: 100% !important;

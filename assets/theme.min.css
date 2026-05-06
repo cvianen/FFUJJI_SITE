@@ -292,6 +292,12 @@ body:not(#projects) .border-r-grid {
   padding-left: 2.5rem !important;
   padding-right: 2.5rem !important;
 }
+@media (max-width: 1023px) {
+  .product-description-below {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+}
 .product-description-below .rte {
   font-size: 1rem !important;
   line-height: 1.65 !important;

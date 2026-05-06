@@ -168,7 +168,7 @@ body:not(#projects) .border-r-grid {
   .collection-list,
   .featured-collection__grid {
     background: transparent !important;
-    gap: 3rem 2.5rem !important;
+    gap: 2rem 1.5rem !important;
   }
   .collection-list li,
   .featured-collection__grid li {

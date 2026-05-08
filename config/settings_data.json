@@ -68,6 +68,8 @@
     "cart_notes_enable": false,
     "cart_vendor_enable": false,
     "cart_color_scheme": "tertiary",
+    "cart_upsell_enable": true,
+    "cart_upsell_collection": "Upsell Collection",
     "favicon": "shopify://shop_images/android-chrome-256x256.png",
     "sale_label_image": "shopify://shop_images/Untitled_design.png",
     "sale_label_image_width": 35,

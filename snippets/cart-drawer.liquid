@@ -243,13 +243,15 @@
                 {%- assign cart_ids = cart_ids | append: item.product_id | append: ',' -%}
               {%- endfor -%}
               {%- assign upsell_count = 0 -%}
+              {%- assign upsell_opened = false -%}
               {%- for upsell_product in upsell_col.products limit: 20 -%}
-                {%- if upsell_count == 0 -%}
-                  <div class="pt-4 pb-2 bg-scheme-background border-t-grid border-grid-color">
-                    <div style="display:flex; gap:10px; overflow-x:auto; padding:0 1rem 12px;">
-                {%- endif -%}
                 {%- unless cart_ids contains upsell_product.id -%}
                   {%- if upsell_count < 5 -%}
+                    {%- unless upsell_opened -%}
+                      <div class="pt-4 pb-2 bg-scheme-background border-t-grid border-grid-color">
+                        <div style="display:flex; gap:10px; overflow-x:auto; padding:0 1rem 12px;">
+                      {%- assign upsell_opened = true -%}
+                    {%- endunless -%}
                     {%- assign upsell_variant = upsell_product.first_available_variant | default: upsell_product.variants[0] -%}
                     <div x-data="{ adding_{{ upsell_variant.id }}: false, added_{{ upsell_variant.id }}: false }" style="flex:0 0 auto; width:120px;">
                       <a href="{{ upsell_product.url }}" style="display:block; text-decoration:none;">
@@ -276,9 +278,9 @@
                   {%- endif -%}
                 {%- endunless -%}
               {%- endfor -%}
-              {%- if upsell_count > 0 -%}
-                    </div>
-                  </div>
+              {%- if upsell_opened -%}
+                        </div>
+                      </div>
               {%- endif -%}
             {%- endif -%}
           {%- endif -%}

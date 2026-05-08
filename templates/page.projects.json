@@ -12,31 +12,13 @@
     "projects": {
       "type": "projects-scroll",
       "blocks": {
-        "project_fw23": {
+        "project_fw25": {
           "type": "project",
           "settings": {
-            "season_label": "FW23",
-            "title": "The Mountain Never Sleeps",
-            "image": "shopify://shop_images/P7401674-379056467874-6.jpg",
-            "link": "shopify://pages/lookbook-fw23"
-          }
-        },
-        "project_ss24": {
-          "type": "project",
-          "settings": {
-            "season_label": "SS24",
-            "title": "The Triad Collection",
-            "image": "shopify://shop_images/MOBILE_HOME.png",
-            "link": "shopify://pages/lookbook-ss24"
-          }
-        },
-        "project_fw24": {
-          "type": "project",
-          "settings": {
-            "season_label": "FW24",
-            "title": "Hat Drop",
-            "image": "shopify://shop_images/IMG_0322.jpg",
-            "link": "shopify://pages/lookbookfw24"
+            "season_label": "FW25",
+            "title": "FFUJJI x Foreign Vintage",
+            "image": "shopify://shop_images/DSC00679.jpg",
+            "link": "shopify://pages/ffujji-x-foreign-vintage"
           }
         },
         "project_ss25": {
@@ -48,27 +30,47 @@
             "link": "shopify://pages/lookbook-ss25"
           }
         },
-        "project_fw25": {
+        "project_fw24": {
           "type": "project",
           "settings": {
-            "season_label": "FW25",
-            "title": "FFUJJI x Foreign Vintage",
-            "image": "shopify://shop_images/DSC00679.jpg",
-            "link": "shopify://pages/ffujji-x-foreign-vintage"
+            "season_label": "FW24",
+            "title": "Hat Drop",
+            "image": "shopify://shop_images/IMG_0322.jpg",
+            "link": "shopify://pages/lookbookfw24"
+          }
+        },
+        "project_ss24": {
+          "type": "project",
+          "settings": {
+            "season_label": "SS24",
+            "title": "The Triad Collection",
+            "image": "shopify://shop_images/MOBILE_HOME.png",
+            "link": "shopify://pages/lookbook-ss24"
+          }
+        },
+        "project_fw23": {
+          "type": "project",
+          "settings": {
+            "season_label": "FW23",
+            "title": "The Mountain Never Sleeps",
+            "image": "shopify://shop_images/P7401674-379056467874-6.jpg",
+            "link": "shopify://pages/lookbook-fw23"
           }
         }
       },
       "block_order": [
-        "project_fw23",
-        "project_ss24",
-        "project_fw24",
+        "project_fw25",
         "project_ss25",
-        "project_fw25"
+        "project_fw24",
+        "project_ss24",
+        "project_fw23"
       ],
       "settings": {
         "color_scheme": "primary"
       }
     }
   },
-  "order": ["projects"]
+  "order": [
+    "projects"
+  ]
 }

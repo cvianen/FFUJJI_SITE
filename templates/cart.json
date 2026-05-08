@@ -16,24 +16,10 @@
     "cart-footer": {
       "type": "cart-footer",
       "settings": {}
-    },
-    "featured_collection_xpfWmB": {
-      "type": "featured-collection",
-      "name": "Featured collection",
-      "settings": {
-        "title": "",
-        "collection": "upsell-collection",
-        "grid": 3,
-        "rows": 2,
-        "grid_mobile": "1",
-        "show_view_all": false,
-        "color_scheme": "primary"
-      }
     }
   },
   "order": [
     "cart-items",
-    "cart-footer",
-    "featured_collection_xpfWmB"
+    "cart-footer"
   ]
 }

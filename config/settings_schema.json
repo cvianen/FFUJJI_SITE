@@ -685,6 +685,18 @@
             { "value": "tertiary", "label": "Tertiary"}
         ],
         "default":   "secondary"
+      },
+      {
+        "type": "checkbox",
+        "id": "cart_upsell_enable",
+        "label": "Show upsell products in cart drawer",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "cart_upsell_collection",
+        "label": "Upsell collection handle",
+        "info": "Enter the handle of a collection to show as upsell products (e.g. 'accessories'). Set that collection's sort order to 'Price: Low to High' in Shopify admin."
       }
     ]
   },

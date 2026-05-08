@@ -189,6 +189,54 @@
               </textarea>
             </div>
           {% endif %}
+          {%- if settings.cart_upsell_enable and settings.cart_upsell_collection != blank -%}
+            {%- assign upsell_col = collections[settings.cart_upsell_collection] -%}
+            {%- if upsell_col != blank -%}
+              {%- assign cart_ids = '' -%}
+              {%- for item in cart.items -%}
+                {%- assign cart_ids = cart_ids | append: item.product_id | append: ',' -%}
+              {%- endfor -%}
+              {%- assign upsell_count = 0 -%}
+              {%- for upsell_product in upsell_col.products limit: 20 -%}
+                {%- if upsell_count == 0 -%}
+                  <div class="border-t-grid border-grid-color pt-3 pb-1 bg-scheme-background">
+                    <p class="section-x-padding text-scheme-text" style="font-size:0.65rem; font-family:var(--heading-font-stack); letter-spacing:0.12em; text-transform:uppercase; margin-bottom:8px;">Misschien ook leuk</p>
+                    <div style="display:flex; gap:10px; overflow-x:auto; padding:0 1rem 8px;">
+                {%- endif -%}
+                {%- unless cart_ids contains upsell_product.id -%}
+                  {%- if upsell_count < 4 -%}
+                    {%- assign upsell_variant = upsell_product.first_available_variant | default: upsell_product.variants[0] -%}
+                    <div x-data="{ adding_{{ upsell_variant.id }}: false, added_{{ upsell_variant.id }}: false }" style="flex:0 0 auto; width:120px;">
+                      <a href="{{ upsell_product.url }}" style="display:block; text-decoration:none;">
+                        {%- if upsell_product.featured_image -%}
+                          <img src="{{ upsell_product.featured_image | image_url: width: 240 }}"
+                               alt="{{ upsell_product.title | escape }}"
+                               loading="lazy"
+                               style="width:120px; height:120px; object-fit:cover; display:block;">
+                        {%- endif -%}
+                        <p class="text-scheme-text" style="font-size:0.6rem; font-family:var(--heading-font-stack); letter-spacing:0.05em; text-transform:uppercase; margin-top:4px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">{{ upsell_product.title }}</p>
+                        <p class="text-scheme-text" style="font-size:0.65rem; margin-top:2px;">{{ upsell_product.price | money }}</p>
+                      </a>
+                      {%- if upsell_variant -%}
+                        <button
+                          style="margin-top:5px; width:100%; padding:4px 0; font-size:0.6rem; font-family:var(--heading-font-stack); letter-spacing:0.1em; text-transform:uppercase; border:1px solid #030303; background:transparent; cursor:pointer;"
+                          :style="added_{{ upsell_variant.id }} ? 'background:#030303;color:#fff;' : ''"
+                          :disabled="adding_{{ upsell_variant.id }} || added_{{ upsell_variant.id }}"
+                          @click.prevent="adding_{{ upsell_variant.id }} = true; fetch('/cart/add.js', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({id:{{ upsell_variant.id }}, quantity:1})}).then(() => { adding_{{ upsell_variant.id }} = false; added_{{ upsell_variant.id }} = true; document.body.dispatchEvent(new CustomEvent('baseline:modalcart:afteradditem')); })">
+                          <span x-text="adding_{{ upsell_variant.id }} ? '...' : (added_{{ upsell_variant.id }} ? '✓' : '+ Voeg toe')">+ Voeg toe</span>
+                        </button>
+                      {%- endif -%}
+                    </div>
+                    {%- assign upsell_count = upsell_count | plus: 1 -%}
+                  {%- endif -%}
+                {%- endunless -%}
+              {%- endfor -%}
+              {%- if upsell_count > 0 -%}
+                    </div>
+                  </div>
+              {%- endif -%}
+            {%- endif -%}
+          {%- endif -%}
           <div class="bottom-0 py-4 section-x-padding bg-scheme-background border-t-grid border-grid-color">
             <div :class="{ 'opacity-50  cursor-wait': updating }">
               <template x-if="state.cart_level_discount_applications.length"

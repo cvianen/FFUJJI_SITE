@@ -264,7 +264,7 @@
                       </a>
                       {%- if upsell_variant -%}
                         <button
-                          style="margin-top:5px; width:100%; padding:4px 0; font-size:0.5rem; font-family:var(--heading-font-stack); letter-spacing:0.1em; text-transform:uppercase; border:1px solid #030303; background:transparent; cursor:pointer;"
+                          style="margin-top:5px; width:100%; padding:4px 0; font-size:0.4rem; font-family:var(--heading-font-stack); letter-spacing:0.1em; text-transform:uppercase; border:1px solid #030303; background:transparent; cursor:pointer;"
                           :style="added_{{ upsell_variant.id }} ? 'background:#030303;color:#fff;' : ''"
                           :disabled="adding_{{ upsell_variant.id }} || added_{{ upsell_variant.id }}"
                           @click.prevent="adding_{{ upsell_variant.id }} = true; fetch('/cart/add.js', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({id:{{ upsell_variant.id }}, quantity:1})}).then(() => { adding_{{ upsell_variant.id }} = false; added_{{ upsell_variant.id }} = true; document.body.dispatchEvent(new CustomEvent('baseline:modalcart:afteradditem')); })">

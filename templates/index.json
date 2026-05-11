@@ -1,1 +1,49 @@
-{"sections":{"image_with_text_overlay_rkUtpq":{"type":"image-with-text-overlay","settings":{"image":"shopify:\/\/shop_images\/GRASS_LARGE_d5afc72a-2493-4fe1-a434-a3da5af2a68c.png","image_mobile":"shopify:\/\/shop_images\/GRASS_SMALL_245fab9a-6500-4d71-950f-a04d1a403c13.png","indent_image":false,"height":"natural","image_focal_point":"object-center","title":"END OF SEASON SALE","heading_size":"text-2xl lg:text-6xl","text":"","content_position":"justify-center items-center text-center","content_width_desktop":"lg:w-full","text_color":"white","background_color":"tertiary","cta_link":"shopify:\/\/collections\/sale","cta_text":"Shop now","cta_style":"button"}},"featured_collection_UdDpyg":{"type":"featured-collection","settings":{"title":"","collection":"sale","grid":4,"rows":1,"grid_mobile":"2","show_view_all":true,"color_scheme":"primary"}}},"order":["image_with_text_overlay_rkUtpq","featured_collection_UdDpyg"]}
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "image_with_text_overlay_rkUtpq": {
+      "type": "image-with-text-overlay",
+      "settings": {
+        "image": "shopify://shop_images/GRASS_LARGE_d5afc72a-2493-4fe1-a434-a3da5af2a68c.png",
+        "image_mobile": "shopify://shop_images/GRASS_SMALL_245fab9a-6500-4d71-950f-a04d1a403c13.png",
+        "indent_image": false,
+        "height": "natural",
+        "image_focal_point": "object-center",
+        "title": "END OF SEASON SALE",
+        "heading_size": "text-2xl lg:text-6xl",
+        "text": "",
+        "content_position": "justify-center items-center text-center",
+        "content_width_desktop": "lg:w-full",
+        "text_color": "white",
+        "background_color": "tertiary",
+        "cta_link": "shopify://collections/sale",
+        "cta_text": "Shop now",
+        "cta_style": "button"
+      }
+    },
+    "featured_collection_UdDpyg": {
+      "type": "featured-collection",
+      "settings": {
+        "title": "",
+        "collection": "bags",
+        "grid": 2,
+        "rows": 1,
+        "grid_mobile": "2",
+        "show_view_all": true,
+        "color_scheme": "primary"
+      }
+    }
+  },
+  "order": [
+    "image_with_text_overlay_rkUtpq",
+    "featured_collection_UdDpyg"
+  ]
+}

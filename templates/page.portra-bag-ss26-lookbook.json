@@ -15,53 +15,53 @@
         "header": {
           "type": "header",
           "settings": {
-            "season": "SS25",
-            "title": "Communal Drop"
+            "season": "SS26",
+            "title": "Portra Bag Drop"
           }
         },
         "full_1": {
           "type": "image_full",
           "settings": {
-            "image": "shopify://shop_images/DSC01902.jpg"
+            "image": "shopify://shop_images/IMG_8487.jpg"
           }
         },
         "pair_1": {
           "type": "image_pair",
           "settings": {
-            "image_left": "shopify://shop_images/DSC02068.jpg",
-            "image_right": "shopify://shop_images/DSC01939.jpg"
+            "image_left": "shopify://shop_images/IMG_8490.jpg",
+            "image_right": "shopify://shop_images/IMG_8497.jpg"
           }
         },
         "full_2": {
           "type": "image_full",
           "settings": {
-            "image": "shopify://shop_images/DSC02051.jpg"
+            "image": "shopify://shop_images/IMG_8501_426c19de-454b-4273-b4ae-e301ab7ae214.jpg"
           }
         },
         "pair_2": {
           "type": "image_pair",
           "settings": {
-            "image_left": "shopify://shop_images/DSC02079.jpg",
-            "image_right": "shopify://shop_images/DSC02075.jpg"
+            "image_left": "shopify://shop_images/IMG_8471.jpg",
+            "image_right": "shopify://shop_images/IMG_8484.jpg"
           }
         },
         "full_3": {
           "type": "image_full",
           "settings": {
-            "image": "shopify://shop_images/DSC01785.jpg"
+            "image": "shopify://shop_images/IMG_8465.jpg"
           }
         },
         "pair_3": {
           "type": "image_pair",
           "settings": {
-            "image_left": "shopify://shop_images/DSC01858-2.jpg",
-            "image_right": "shopify://shop_images/DSC01832.jpg"
+            "image_left": "shopify://shop_images/IMG_8476.jpg",
+            "image_right": "shopify://shop_images/IMG_8475.jpg"
           }
         },
         "full_4": {
           "type": "image_full",
           "settings": {
-            "image": "shopify://shop_images/DSC01796.jpg"
+            "image": "shopify://shop_images/IMG_8493.jpg"
           }
         },
         "pair_4": {

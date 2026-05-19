@@ -138,10 +138,18 @@
               "main_linklist": "footer-1",
               "show_heading": false
             }
+          },
+          "menu_KRUCHd": {
+            "type": "menu",
+            "settings": {
+              "main_linklist": "footer",
+              "show_heading": false
+            }
           }
         },
         "block_order": [
-          "menu_V484jG"
+          "menu_V484jG",
+          "menu_KRUCHd"
         ],
         "custom_css": [],
         "settings": {

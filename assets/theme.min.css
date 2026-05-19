@@ -19,16 +19,8 @@
       padding:0px !important;
     }
 
- .hero-cta-offset {
-  transform: translateY(clamp(60px, 12vh, 200px)) !important;
-}
 .hero-cta-offset a {
   transition: all 0.25s ease;
-}
-@media (max-width: 640px) {
-  .hero-cta-offset {
-    transform: translateY(clamp(40px, 8vh, 120px)) !important;
-  }
 }
 header a[href*="/collections/sale"] {
   color: #963841 !important;

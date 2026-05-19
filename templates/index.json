@@ -18,7 +18,7 @@
         "height": "natural",
         "image_focal_point": "object-center",
         "title": "NEW: PORTRA BAG",
-        "heading_size": "text-2xl",
+        "heading_size": "text-2xl lg:text-6xl",
         "text": "",
         "content_position": "justify-center items-center text-center",
         "content_width_desktop": "lg:w-full",

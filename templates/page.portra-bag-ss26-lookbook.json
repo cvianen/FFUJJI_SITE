@@ -63,13 +63,6 @@
           "settings": {
             "image": "shopify://shop_images/IMG_8493.jpg"
           }
-        },
-        "pair_4": {
-          "type": "image_pair",
-          "settings": {
-            "image_left": "shopify://shop_images/DSC01815.jpg",
-            "image_right": "shopify://shop_images/DSC01744.jpg"
-          }
         }
       },
       "block_order": [
@@ -80,8 +73,7 @@
         "pair_2",
         "full_3",
         "pair_3",
-        "full_4",
-        "pair_4"
+        "full_4"
       ],
       "settings": {
         "color_scheme": "primary"

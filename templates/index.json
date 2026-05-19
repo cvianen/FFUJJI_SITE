@@ -12,19 +12,19 @@
     "image_with_text_overlay_rkUtpq": {
       "type": "image-with-text-overlay",
       "settings": {
-        "image": "shopify://shop_images/GRASS_LARGE_d5afc72a-2493-4fe1-a434-a3da5af2a68c.png",
-        "image_mobile": "shopify://shop_images/GRASS_SMALL_245fab9a-6500-4d71-950f-a04d1a403c13.png",
+        "image": "shopify://shop_images/IMG_8485.jpg",
+        "image_mobile": "shopify://shop_images/IMG_8495.jpg",
         "indent_image": false,
         "height": "natural",
         "image_focal_point": "object-center",
-        "title": "END OF SEASON SALE",
-        "heading_size": "text-2xl lg:text-6xl",
+        "title": "NEW: PORTRA BAG",
+        "heading_size": "text-2xl",
         "text": "",
         "content_position": "justify-center items-center text-center",
         "content_width_desktop": "lg:w-full",
         "text_color": "white",
         "background_color": "tertiary",
-        "cta_link": "shopify://collections/sale",
+        "cta_link": "shopify://products/portra-bag-black-onyx",
         "cta_text": "Shop now",
         "cta_style": "button"
       }

@@ -67,7 +67,7 @@
               link: cta_link
             -%}
           {%- when 'button' -%}
-            <a href="{{ cta_link }}" class="inline-flex justify-center items-center text-base px-8 py-2 {% render 'button-style', section_color: text_color %}  {% render 'button-color', section_color: text_color %} ">
+            <a href="{{ cta_link }}" class="inline-flex justify-center items-center text-base px-8 py-2 {% render 'button-style', section_color: text_color %}  {% render 'button-color', section_color: text_color %} " style="border-radius: 999px;">
               <span class="{% if settings.button_uppercase %}uppercase{% endif %}">{{ cta_text }}{% if settings.buttons_show_arrow %}&nbsp;&rarr;{% endif %}</span>
             </a>
           {%- endcase -%}

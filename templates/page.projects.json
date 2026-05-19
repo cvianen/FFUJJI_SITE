@@ -12,6 +12,15 @@
     "projects": {
       "type": "projects-scroll",
       "blocks": {
+        "project_pAUhaG": {
+          "type": "project",
+          "settings": {
+            "season_label": "SS26",
+            "title": "PORTRA BAG DROP",
+            "image": "shopify://shop_images/IMG_8471_2.jpg",
+            "link": "shopify://pages/porta-bag-ss26"
+          }
+        },
         "project_fw25": {
           "type": "project",
           "settings": {
@@ -59,6 +68,7 @@
         }
       },
       "block_order": [
+        "project_pAUhaG",
         "project_fw25",
         "project_ss25",
         "project_fw24",

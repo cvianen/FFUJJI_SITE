@@ -385,13 +385,13 @@ body:not(#projects) .border-r-grid {
 
 /* --- Add to cart knop: olijfgroen gevuld, witte tekst --- */
 .add-to-cart {
-  background-color: #849E00 !important;
-  border-color: #849E00 !important;
+  background-color: #008000 !important;
+  border-color: #008000 !important;
   color: #ffffff !important;
 }
 .add-to-cart:hover {
-  background-color: #6d8300 !important;
-  border-color: #6d8300 !important;
+  background-color: #006600 !important;
+  border-color: #006600 !important;
   color: #ffffff !important;
 }
 

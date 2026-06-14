@@ -220,5 +220,17 @@ document.addEventListener('click', function (e) {
 });
 </script>
 <style>.widerruf-form-branding{display:none!important;visibility:hidden!important;height:0!important;overflow:hidden!important;}</style>
+<script>
+(function(){
+  function removeRevoqBranding(){
+    var els = document.querySelectorAll('.widerruf-form-branding');
+    els.forEach(function(el){ el.remove(); });
+  }
+  removeRevoqBranding();
+  [100,500,1000,2000,3000].forEach(function(t){ setTimeout(removeRevoqBranding, t); });
+  var observer = new MutationObserver(removeRevoqBranding);
+  observer.observe(document.body, {childList:true, subtree:true});
+})();
+</script>
 </body>
 </html>

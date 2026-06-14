@@ -384,12 +384,7 @@ body:not(#projects) .border-r-grid {
 }
 
 /* --- Revoq branding verbergen --- */
-[class*="revoq-powered"],
-[class*="powered-by"],
-[class*="revoq-branding"],
-[class*="PoweredBy"],
-[id*="revoq-powered"],
-a[href*="revoq"] {
+.widerruf-form-branding {
   display: none !important;
 }
 

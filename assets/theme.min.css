@@ -383,6 +383,16 @@ body:not(#projects) .border-r-grid {
   font-weight: 400 !important;
 }
 
+/* --- Revoq branding verbergen --- */
+[class*="revoq-powered"],
+[class*="powered-by"],
+[class*="revoq-branding"],
+[class*="PoweredBy"],
+[id*="revoq-powered"],
+a[href*="revoq"] {
+  display: none !important;
+}
+
 /* --- Add to cart knop: groen gevuld, witte tekst --- */
 .add-to-cart {
   background-color: #008000 !important;

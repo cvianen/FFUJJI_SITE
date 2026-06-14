@@ -383,3 +383,15 @@ body:not(#projects) .border-r-grid {
   font-weight: 400 !important;
 }
 
+/* --- Add to cart knop: olijfgroen gevuld, witte tekst --- */
+.add-to-cart {
+  background-color: #849E00 !important;
+  border-color: #849E00 !important;
+  color: #ffffff !important;
+}
+.add-to-cart:hover {
+  background-color: #6d8300 !important;
+  border-color: #6d8300 !important;
+  color: #ffffff !important;
+}
+

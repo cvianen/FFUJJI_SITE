@@ -281,8 +281,11 @@
         {%- endif -%}
       {%- endfor -%}
       <div style="flex:1; min-width:0; {% unless has_size_option %}display:flex; align-items:center;{% endunless %}">
-        <p style="font-size:0.85rem; font-weight:500; letter-spacing:0.12em; text-transform:uppercase; font-family:var(--heading-font-stack); margin:{% if has_size_option %}0 0 8px{% else %}0{% endif %}; line-height:1.4; color:#030303;">
+        <p style="font-size:0.85rem; font-weight:500; letter-spacing:0.12em; text-transform:uppercase; font-family:var(--heading-font-stack); margin:0 0 2px; line-height:1.4; color:#030303;">
           {{ product.title }}
+        </p>
+        <p style="font-size:0.8rem; font-weight:400; letter-spacing:0; font-family:var(--body-font-stack); margin:{% if has_size_option %}0 0 8px{% else %}0{% endif %}; color:#030303;">
+          {{ product.price | money }}
         </p>
 
         {%- comment -%}Size picker{%- endcomment -%}

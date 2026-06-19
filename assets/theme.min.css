@@ -399,6 +399,13 @@ div[class*="widerruf-form-branding"] {
   pointer-events: none !important;
 }
 
+/* --- Sticky bar ADD TO CART tekst: groen --- */
+[id^="mobile-sticky-bar"] button {
+  color: #008000 !important;
+  background: transparent !important;
+  border: none !important;
+}
+
 /* --- Add to cart knop: groen gevuld, witte tekst --- */
 .add-to-cart {
   background-color: #008000 !important;

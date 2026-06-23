@@ -265,7 +265,7 @@
       var atcBtn = document.getElementById('addToCartButton');
       if (!bar || !atcBtn) return;
       var obs = new IntersectionObserver(function(entries) {
-        bar.style.transform = entries[0].isIntersecting ? 'translateY(110%)' : 'translateY(0)';
+        bar.style.transform = entries[0].isIntersecting ? 'translateY(calc(100% + 60px))' : 'translateY(0)';
       }, { threshold: 0.1 });
       obs.observe(atcBtn);
     })();

@@ -233,9 +233,11 @@
           badge.style.pointerEvents = 'none';
           return;
         }
-        // Fade out over first 200px of scroll
-        var scrollY = window.scrollY || window.pageYOffset;
-        var opacity = Math.max(0, 1 - scrollY / 200);
+        // Fade out as product content scrolls up to badge position
+        var contentEl = document.querySelector('.product-content-container');
+        var badgeTop = window.innerHeight - 110 - (badge.offsetHeight || 44);
+        var contentTop = contentEl ? contentEl.getBoundingClientRect().top : window.innerHeight;
+        var opacity = Math.max(0, Math.min(1, (contentTop - badgeTop) / 60));
         badge.style.opacity = opacity;
         badge.style.pointerEvents = opacity > 0.05 ? 'auto' : 'none';
       }

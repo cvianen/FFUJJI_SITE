@@ -226,20 +226,12 @@
       // Move badge to <body> so position:fixed is never blocked by ancestor transforms
       document.body.appendChild(badge);
       var overlayOpen = false;
+      var stickyBarVisible = false;
 
       function updateBadge() {
-        if (overlayOpen) {
-          badge.style.opacity = '0';
-          badge.style.pointerEvents = 'none';
-          return;
-        }
-        // Fade out as product content scrolls up to badge position
-        var contentEl = document.querySelector('.product-content-container');
-        var badgeTop = window.innerHeight - 110 - (badge.offsetHeight || 44);
-        var contentTop = contentEl ? contentEl.getBoundingClientRect().top : window.innerHeight;
-        var opacity = Math.max(0, Math.min(1, (contentTop - badgeTop) / 60));
-        badge.style.opacity = opacity;
-        badge.style.pointerEvents = opacity > 0.05 ? 'auto' : 'none';
+        var visible = !overlayOpen && !stickyBarVisible;
+        badge.style.opacity = visible ? '1' : '0';
+        badge.style.pointerEvents = visible ? 'auto' : 'none';
       }
 
       function checkDrawers() {
@@ -250,8 +242,18 @@
         updateBadge();
       }
 
-      window.addEventListener('scroll', updateBadge, { passive: true });
-      updateBadge();
+      // Badge is visible exactly when the sticky bar is hidden (they never overlap)
+      document.addEventListener('DOMContentLoaded', function() {
+        var stickyBar = document.getElementById('mobile-sticky-bar-{{ section.id }}');
+        if (stickyBar) {
+          new MutationObserver(function() {
+            stickyBarVisible = stickyBar.style.transform !== 'translateY(calc(100% + 60px))';
+            updateBadge();
+          }).observe(stickyBar, { attributes: true, attributeFilter: ['style'] });
+          stickyBarVisible = stickyBar.style.transform !== 'translateY(calc(100% + 60px))';
+        }
+        updateBadge();
+      });
 
       var cartEl = document.getElementById('CartContainer');
       if (cartEl) new MutationObserver(checkDrawers).observe(cartEl, { attributes: true, attributeFilter: ['style'] });

@@ -223,7 +223,7 @@
     (function() {
       var badge = document.getElementById('sticky-price-badge-{{ section.id }}');
       var media = document.querySelector('[data-product-single-media-group]');
-      var priceArea = document.querySelector('.product-content-container');
+      var priceArea = document.querySelector('.product-content-container h1');
       if (!badge) return;
       var imagesVisible = false;
       var priceInView = false;
@@ -242,7 +242,7 @@
         new IntersectionObserver(function(e) {
           priceInView = e[0].isIntersecting;
           updateBadge();
-        }, { threshold: 0.1 }).observe(priceArea);
+        }, { threshold: 1.0 }).observe(priceArea);
       }
     })();
   </script>

@@ -320,10 +320,26 @@
       var bar = document.getElementById('mobile-sticky-bar-{{ section.id }}');
       var atcBtn = document.getElementById('addToCartButton');
       if (!bar || !atcBtn) return;
-      var obs = new IntersectionObserver(function(entries) {
-        bar.style.transform = entries[0].isIntersecting ? 'translateY(calc(100% + 60px))' : 'translateY(0)';
-      }, { threshold: 0.1 });
-      obs.observe(atcBtn);
+      var atcInView = true;
+      var overlayOpen = false;
+      function updateBar() {
+        bar.style.transform = (atcInView || overlayOpen) ? 'translateY(calc(100% + 60px))' : 'translateY(0)';
+      }
+      new IntersectionObserver(function(entries) {
+        atcInView = entries[0].isIntersecting;
+        updateBar();
+      }, { threshold: 0.1 }).observe(atcBtn);
+      function checkDrawers() {
+        var cart = document.getElementById('CartContainer');
+        var sidebar = document.querySelector('.sidebar-container');
+        overlayOpen = (cart && cart.style.display !== 'none') ||
+                      (sidebar && sidebar.style.display !== 'none');
+        updateBar();
+      }
+      var cartEl = document.getElementById('CartContainer');
+      if (cartEl) new MutationObserver(checkDrawers).observe(cartEl, { attributes: true, attributeFilter: ['style'] });
+      var sidebarEl = document.querySelector('.sidebar-container');
+      if (sidebarEl) new MutationObserver(checkDrawers).observe(sidebarEl, { attributes: true, attributeFilter: ['style'] });
     })();
   </script>
     <div style="display:flex; align-items:center; gap:16px; padding:14px 16px 24px;">

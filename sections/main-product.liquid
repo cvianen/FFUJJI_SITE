@@ -270,6 +270,16 @@
       obs.observe(atcBtn);
     })();
   </script>
+    <!-- Price strip -->
+    <div style="padding:10px 16px 0;">
+      <div style="display:flex; align-items:baseline; gap:10px; flex-wrap:nowrap;">
+        <span style="font-size:1.05rem; font-weight:700; color:#030303;"
+              x-text="formatMoney(current_variant.price)"></span>
+        <s x-show="current_variant.compare_at_price > current_variant.price"
+           style="font-size:0.85rem; color:#999; font-weight:400;"
+           x-text="formatMoney(current_variant.compare_at_price)"></s>
+      </div>
+    </div>
     <div style="display:flex; align-items:center; gap:16px; padding:14px 16px 24px;">
 
       <!-- Left: product name + size picker -->

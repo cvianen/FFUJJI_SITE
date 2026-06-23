@@ -228,32 +228,41 @@
       var imagesVisible = false;
       var priceInView = false;
       var overlayOpen = false;
+
       function updateBadge() {
         var show = imagesVisible && !priceInView && !overlayOpen;
         badge.style.opacity = show ? '1' : '0';
         badge.style.pointerEvents = show ? 'auto' : 'none';
       }
-      if (media) {
-        new IntersectionObserver(function(e) {
-          imagesVisible = e[0].isIntersecting;
-          updateBadge();
-        }, { threshold: 0.9 }).observe(media);
+
+      function checkVisibility() {
+        if (media) {
+          var r = media.getBoundingClientRect();
+          var vis = Math.min(r.bottom, window.innerHeight) - Math.max(r.top, 0);
+          imagesVisible = r.height > 0 && (vis / r.height) >= 0.9;
+        }
+        if (priceArea) {
+          var p = priceArea.getBoundingClientRect();
+          priceInView = p.top < window.innerHeight && p.bottom > 0;
+        }
+        updateBadge();
       }
-      if (priceArea) {
-        new IntersectionObserver(function(e) {
-          priceInView = e[0].isIntersecting;
-          updateBadge();
-        }, { threshold: 0 }).observe(priceArea);
+
+      function checkDrawers() {
+        var cart = document.getElementById('CartContainer');
+        var sidebar = document.querySelector('.sidebar-container');
+        overlayOpen = (cart && cart.style.display !== 'none') ||
+                      (sidebar && sidebar.style.display !== 'none');
+        updateBadge();
       }
-      // Hide badge when cart or menu drawer is open (Alpine store)
-      function watchDrawers() {
-        if (!window.Alpine || !Alpine.store('drawer')) { setTimeout(watchDrawers, 200); return; }
-        Alpine.effect(function() {
-          overlayOpen = !!(Alpine.store('drawer').cartDrawerOpen || Alpine.store('drawer').menuDrawerOpen);
-          updateBadge();
-        });
-      }
-      watchDrawers();
+
+      window.addEventListener('scroll', checkVisibility, { passive: true });
+      setTimeout(checkVisibility, 150);
+
+      var cartEl = document.getElementById('CartContainer');
+      if (cartEl) new MutationObserver(checkDrawers).observe(cartEl, { attributes: true, attributeFilter: ['style'] });
+      var sidebarEl = document.querySelector('.sidebar-container');
+      if (sidebarEl) new MutationObserver(checkDrawers).observe(sidebarEl, { attributes: true, attributeFilter: ['style'] });
     })();
   </script>
 

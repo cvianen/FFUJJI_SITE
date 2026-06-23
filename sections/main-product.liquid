@@ -270,14 +270,13 @@
       obs.observe(atcBtn);
     })();
   </script>
-    <!-- Price strip -->
-    <div style="padding:10px 16px 0;">
-      <div style="display:flex; align-items:baseline; gap:10px; flex-wrap:nowrap;">
-        <span style="font-size:1.05rem; font-weight:700; color:#030303;"
-              x-text="formatMoney(current_variant.price)"></span>
+    <!-- Floating price badge -->
+    <div style="position:absolute; top:-46px; left:50%; transform:translateX(-50%); background:#fff; border-radius:4px; padding:8px 16px; box-shadow:0 -2px 8px rgba(0,0,0,0.10); white-space:nowrap;">
+      <div style="display:flex; align-items:baseline; gap:8px; justify-content:center;">
+        <span x-text="formatMoney(current_variant.price)" style="font-size:1rem; font-weight:700; color:#008000;"></span>
         <s x-show="current_variant.compare_at_price > current_variant.price"
-           style="font-size:0.85rem; color:#999; font-weight:400;"
-           x-text="formatMoney(current_variant.compare_at_price)"></s>
+           x-text="formatMoney(current_variant.compare_at_price)"
+           style="font-size:0.8rem; color:#999;"></s>
       </div>
     </div>
     <div style="display:flex; align-items:center; gap:16px; padding:14px 16px 24px;">

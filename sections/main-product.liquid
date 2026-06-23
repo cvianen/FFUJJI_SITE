@@ -223,12 +223,13 @@
     (function() {
       var badge = document.getElementById('sticky-price-badge-{{ section.id }}');
       var media = document.querySelector('[data-product-single-media-group]');
-      var priceArea = document.querySelector('.product-content-container h1');
+      var priceArea = document.querySelector('.product-content-container');
       if (!badge) return;
       var imagesVisible = false;
       var priceInView = false;
+      var overlayOpen = false;
       function updateBadge() {
-        var show = imagesVisible && !priceInView;
+        var show = imagesVisible && !priceInView && !overlayOpen;
         badge.style.opacity = show ? '1' : '0';
         badge.style.pointerEvents = show ? 'auto' : 'none';
       }
@@ -242,8 +243,17 @@
         new IntersectionObserver(function(e) {
           priceInView = e[0].isIntersecting;
           updateBadge();
-        }, { threshold: 1.0 }).observe(priceArea);
+        }, { threshold: 0 }).observe(priceArea);
       }
+      // Hide badge when cart or menu drawer is open (Alpine store)
+      function watchDrawers() {
+        if (!window.Alpine || !Alpine.store('drawer')) { setTimeout(watchDrawers, 200); return; }
+        Alpine.effect(function() {
+          overlayOpen = !!(Alpine.store('drawer').cartDrawerOpen || Alpine.store('drawer').menuDrawerOpen);
+          updateBadge();
+        });
+      }
+      watchDrawers();
     })();
   </script>
 

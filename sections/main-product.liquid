@@ -231,9 +231,11 @@
           badge.style.pointerEvents = 'none';
           return;
         }
-        // Fade out over first 200px of scroll
-        var scrollY = window.scrollY || window.pageYOffset;
-        var opacity = Math.max(0, 1 - scrollY / 200);
+        // Fade out as the product image scrolls above the badge position
+        var imgTrack = document.querySelector('[data-product-single-media-group] .splide__track');
+        var badgeTop = window.innerHeight - 110 - (badge.offsetHeight || 44);
+        var imgBottom = imgTrack ? imgTrack.getBoundingClientRect().bottom : window.innerHeight;
+        var opacity = Math.max(0, Math.min(1, (imgBottom - badgeTop) / 60));
         badge.style.opacity = opacity;
         badge.style.pointerEvents = opacity > 0.05 ? 'auto' : 'none';
       }

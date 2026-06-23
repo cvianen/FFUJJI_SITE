@@ -222,15 +222,17 @@
   <script>
     (function() {
       var badge = document.getElementById('sticky-price-badge-{{ section.id }}');
-      if (!badge) return;
+      var container = document.querySelector('[data-product-single-media-group]');
+      if (!badge || !container) return;
       var overlayOpen = false;
-      // Distance from viewport bottom where badge appears (same as bottom:110px)
       var fromBottom = 110;
 
       function update() {
         var scrollY = window.scrollY || window.pageYOffset;
-        // Keep badge visually fixed: top = scrollY + (viewport - fromBottom - badgeHeight)
-        badge.style.top = (scrollY + window.innerHeight - fromBottom - badge.offsetHeight) + 'px';
+        var containerTop = container.getBoundingClientRect().top;
+        var badgeH = badge.offsetHeight || 40;
+        // top is relative to container, so subtract containerTop from viewport target
+        badge.style.top = (window.innerHeight - fromBottom - badgeH - containerTop) + 'px';
         // Fade out over first 200px of scroll
         var opacity = overlayOpen ? 0 : Math.max(0, 1 - scrollY / 200);
         badge.style.opacity = opacity;

@@ -210,8 +210,8 @@
     </div>
   </div>
 
-  <!-- Mobile price badge: fixed, visible while product images are on screen -->
-  <div id="sticky-price-badge-{{ section.id }}" class="lg:hidden" style="position:fixed; bottom:110px; left:50%; transform:translateX(-50%); background:#fff; border-radius:4px; padding:8px 16px; box-shadow:0 2px 8px rgba(0,0,0,0.12); white-space:nowrap; z-index:199; opacity:0; pointer-events:none; transition:opacity 0.15s;">
+  <!-- Mobile price badge: JS-fixed position (works around ancestor transforms) -->
+  <div id="sticky-price-badge-{{ section.id }}" class="lg:hidden" style="position:absolute; top:0; left:50%; transform:translateX(-50%); background:#fff; border-radius:4px; padding:8px 16px; box-shadow:0 2px 8px rgba(0,0,0,0.12); white-space:nowrap; z-index:199; opacity:1; transition:opacity 0.2s;">
     <div style="display:flex; align-items:baseline; gap:8px; justify-content:center;">
       <span x-text="formatMoney(current_variant.price)" :style="'font-size:1rem; font-weight:700; color:' + (current_variant.compare_at_price > current_variant.price ? '#9b2e33' : '#008000') + ';'"></span>
       <s x-show="current_variant.compare_at_price > current_variant.price"
@@ -224,16 +224,15 @@
       var badge = document.getElementById('sticky-price-badge-{{ section.id }}');
       if (!badge) return;
       var overlayOpen = false;
+      // Distance from viewport bottom where badge appears (same as bottom:110px)
+      var fromBottom = 110;
 
-      function updateBadge() {
-        if (overlayOpen) {
-          badge.style.opacity = '0';
-          badge.style.pointerEvents = 'none';
-          return;
-        }
-        // Fade out over first 200px of scroll
+      function update() {
         var scrollY = window.scrollY || window.pageYOffset;
-        var opacity = Math.max(0, 1 - scrollY / 200);
+        // Keep badge visually fixed: top = scrollY + (viewport - fromBottom - badgeHeight)
+        badge.style.top = (scrollY + window.innerHeight - fromBottom - badge.offsetHeight) + 'px';
+        // Fade out over first 200px of scroll
+        var opacity = overlayOpen ? 0 : Math.max(0, 1 - scrollY / 200);
         badge.style.opacity = opacity;
         badge.style.pointerEvents = opacity > 0.05 ? 'auto' : 'none';
       }
@@ -243,11 +242,12 @@
         var sidebar = document.querySelector('.sidebar-container');
         overlayOpen = (cart && cart.style.display !== 'none') ||
                       (sidebar && sidebar.style.display !== 'none');
-        updateBadge();
+        update();
       }
 
-      window.addEventListener('scroll', updateBadge, { passive: true });
-      updateBadge();
+      window.addEventListener('scroll', update, { passive: true });
+      // Wait for layout before first position calculation
+      requestAnimationFrame(function() { requestAnimationFrame(update); });
 
       var cartEl = document.getElementById('CartContainer');
       if (cartEl) new MutationObserver(checkDrawers).observe(cartEl, { attributes: true, attributeFilter: ['style'] });

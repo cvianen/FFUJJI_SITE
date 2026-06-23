@@ -226,12 +226,18 @@
       // Move badge to <body> so position:fixed is never blocked by ancestor transforms
       document.body.appendChild(badge);
       var overlayOpen = false;
-      var stickyBarVisible = false;
 
       function updateBadge() {
-        var visible = !overlayOpen && !stickyBarVisible;
-        badge.style.opacity = visible ? '1' : '0';
-        badge.style.pointerEvents = visible ? 'auto' : 'none';
+        if (overlayOpen) {
+          badge.style.opacity = '0';
+          badge.style.pointerEvents = 'none';
+          return;
+        }
+        // Fade out over first 200px of scroll
+        var scrollY = window.scrollY || window.pageYOffset;
+        var opacity = Math.max(0, 1 - scrollY / 200);
+        badge.style.opacity = opacity;
+        badge.style.pointerEvents = opacity > 0.05 ? 'auto' : 'none';
       }
 
       function checkDrawers() {
@@ -242,18 +248,8 @@
         updateBadge();
       }
 
-      // Badge is visible exactly when the sticky bar is hidden (they never overlap)
-      document.addEventListener('DOMContentLoaded', function() {
-        var stickyBar = document.getElementById('mobile-sticky-bar-{{ section.id }}');
-        if (stickyBar) {
-          new MutationObserver(function() {
-            stickyBarVisible = stickyBar.style.transform !== 'translateY(calc(100% + 60px))';
-            updateBadge();
-          }).observe(stickyBar, { attributes: true, attributeFilter: ['style'] });
-          stickyBarVisible = stickyBar.style.transform !== 'translateY(calc(100% + 60px))';
-        }
-        updateBadge();
-      });
+      window.addEventListener('scroll', updateBadge, { passive: true });
+      updateBadge();
 
       var cartEl = document.getElementById('CartContainer');
       if (cartEl) new MutationObserver(checkDrawers).observe(cartEl, { attributes: true, attributeFilter: ['style'] });

@@ -223,13 +223,27 @@
     (function() {
       var badge = document.getElementById('sticky-price-badge-{{ section.id }}');
       var media = document.querySelector('[data-product-single-media-group]');
-      if (!badge || !media) return;
-      var obs = new IntersectionObserver(function(entries) {
-        var vis = entries[0].isIntersecting;
-        badge.style.opacity = vis ? '1' : '0';
-        badge.style.pointerEvents = vis ? 'auto' : 'none';
-      }, { threshold: 0.9 });
-      obs.observe(media);
+      var priceArea = document.querySelector('.product-content-container');
+      if (!badge) return;
+      var imagesVisible = false;
+      var priceInView = false;
+      function updateBadge() {
+        var show = imagesVisible && !priceInView;
+        badge.style.opacity = show ? '1' : '0';
+        badge.style.pointerEvents = show ? 'auto' : 'none';
+      }
+      if (media) {
+        new IntersectionObserver(function(e) {
+          imagesVisible = e[0].isIntersecting;
+          updateBadge();
+        }, { threshold: 0.9 }).observe(media);
+      }
+      if (priceArea) {
+        new IntersectionObserver(function(e) {
+          priceInView = e[0].isIntersecting;
+          updateBadge();
+        }, { threshold: 0.1 }).observe(priceArea);
+      }
     })();
   </script>
 

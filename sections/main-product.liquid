@@ -223,8 +223,6 @@
     (function() {
       var badge = document.getElementById('sticky-price-badge-{{ section.id }}');
       if (!badge) return;
-      // Move badge to <body> so position:fixed is never blocked by ancestor transforms
-      document.body.appendChild(badge);
       var overlayOpen = false;
 
       function updateBadge() {

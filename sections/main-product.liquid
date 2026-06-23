@@ -265,7 +265,17 @@
       var atcBtn = document.getElementById('addToCartButton');
       if (!bar || !atcBtn) return;
       var obs = new IntersectionObserver(function(entries) {
-        bar.style.transform = entries[0].isIntersecting ? 'translateY(calc(100% + 60px))' : 'translateY(0)';
+        var e = entries[0];
+        if (e.isIntersecting) {
+          // ATC button is visible — no need for sticky bar
+          bar.style.transform = 'translateY(calc(100% + 60px))';
+        } else if (e.boundingClientRect.top > 0) {
+          // ATC is still below the fold — user is at the top with the product photo
+          bar.style.transform = 'translateY(0)';
+        } else {
+          // ATC has scrolled off the top — user is past the product form
+          bar.style.transform = 'translateY(calc(100% + 60px))';
+        }
       }, { threshold: 0.1 });
       obs.observe(atcBtn);
     })();
@@ -273,7 +283,7 @@
     <!-- Floating price badge -->
     <div style="position:absolute; top:-46px; left:50%; transform:translateX(-50%); background:#fff; border-radius:4px; padding:8px 16px; box-shadow:0 -2px 8px rgba(0,0,0,0.10); white-space:nowrap;">
       <div style="display:flex; align-items:baseline; gap:8px; justify-content:center;">
-        <span x-text="formatMoney(current_variant.price)" style="font-size:1rem; font-weight:700; color:#008000;"></span>
+        <span x-text="formatMoney(current_variant.price)" :style="'font-size:1rem; font-weight:700; color:' + (current_variant.compare_at_price > current_variant.price ? '#9b2e33' : '#008000') + ';'"></span>
         <s x-show="current_variant.compare_at_price > current_variant.price"
            x-text="formatMoney(current_variant.compare_at_price)"
            style="font-size:0.8rem; color:#999;"></s>
@@ -325,6 +335,7 @@
 
       <!-- Right: ADD TO BAG button -->
       <button
+        class="sticky-atc"
         type="button"
         onclick="var btn=document.getElementById('addToCartButton'); if(btn&&!btn.disabled){btn.click();}"
         :disabled="!currentVariantAvailable || loading"

@@ -213,10 +213,10 @@
   <!-- Mobile price badge: fixed, visible while product images are on screen -->
   <div id="sticky-price-badge-{{ section.id }}" class="lg:hidden" style="position:fixed; bottom:110px; left:50%; transform:translateX(-50%); background:#fff; border-radius:4px; padding:8px 16px; box-shadow:0 2px 8px rgba(0,0,0,0.12); white-space:nowrap; z-index:199; opacity:0; pointer-events:none; transition:opacity 0.15s;">
     <div style="display:flex; align-items:baseline; gap:8px; justify-content:center;">
-      <span x-text="formatMoney(current_variant.price)" :style="'font-size:1rem; font-weight:700; color:' + (current_variant.compare_at_price > current_variant.price ? '#9b2e33' : '#008000') + ';'"></span>
+      <span x-text="formatMoney(current_variant.price)" :style="'font-size:1rem; font-weight:700; color:' + (current_variant.compare_at_price > current_variant.price ? '#9b2e33' : '#008000') + ';'" style="font-size:1rem; font-weight:700; color:{% if current_variant.compare_at_price > current_variant.price %}#9b2e33{% else %}#008000{% endif %};">{{ current_variant.price | money }}</span>
       <s x-show="current_variant.compare_at_price > current_variant.price"
          x-text="formatMoney(current_variant.compare_at_price)"
-         style="font-size:0.8rem; color:#999;"></s>
+         style="font-size:0.8rem; color:#999;">{% if current_variant.compare_at_price > current_variant.price %}{{ current_variant.compare_at_price | money }}{% endif %}</s>
     </div>
   </div>
   <script>

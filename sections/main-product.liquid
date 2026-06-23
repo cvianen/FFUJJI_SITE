@@ -222,30 +222,20 @@
   <script>
     (function() {
       var badge = document.getElementById('sticky-price-badge-{{ section.id }}');
-      var media = document.querySelector('[data-product-single-media-group]');
-      var priceArea = document.querySelector('.product-content-container');
       if (!badge) return;
-      var imagesVisible = false;
-      var priceInView = false;
       var overlayOpen = false;
 
       function updateBadge() {
-        var show = imagesVisible && !priceInView && !overlayOpen;
-        badge.style.opacity = show ? '1' : '0';
-        badge.style.pointerEvents = show ? 'auto' : 'none';
-      }
-
-      function checkVisibility() {
-        if (media) {
-          var r = media.getBoundingClientRect();
-          var vis = Math.min(r.bottom, window.innerHeight) - Math.max(r.top, 0);
-          imagesVisible = r.height > 0 && (vis / r.height) >= 0.9;
+        if (overlayOpen) {
+          badge.style.opacity = '0';
+          badge.style.pointerEvents = 'none';
+          return;
         }
-        if (priceArea) {
-          var p = priceArea.getBoundingClientRect();
-          priceInView = p.top < window.innerHeight && p.bottom > 0;
-        }
-        updateBadge();
+        // Fade out over first 200px of scroll
+        var scrollY = window.scrollY || window.pageYOffset;
+        var opacity = Math.max(0, 1 - scrollY / 200);
+        badge.style.opacity = opacity;
+        badge.style.pointerEvents = opacity > 0.05 ? 'auto' : 'none';
       }
 
       function checkDrawers() {
@@ -256,8 +246,8 @@
         updateBadge();
       }
 
-      window.addEventListener('scroll', checkVisibility, { passive: true });
-      setTimeout(checkVisibility, 150);
+      window.addEventListener('scroll', updateBadge, { passive: true });
+      updateBadge();
 
       var cartEl = document.getElementById('CartContainer');
       if (cartEl) new MutationObserver(checkDrawers).observe(cartEl, { attributes: true, attributeFilter: ['style'] });

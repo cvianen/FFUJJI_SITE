@@ -209,6 +209,11 @@
         "type": "shopify://apps/jotly-size-chart/blocks/embed/97eaca86-aad8-492c-9d4d-0dfdc4899889",
         "disabled": false,
         "settings": {}
+      },
+      "2567389343055140935": {
+        "type": "shopify://apps/microsoft-clarity/blocks/clarity_js/31c3d126-8116-4b4a-8ba1-baeda7c4aeea",
+        "disabled": false,
+        "settings": {}
       }
     }
   },

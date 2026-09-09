@@ -1,7 +1,6 @@
 <!doctype html>
 <html class="no-js supports-no-cookies" lang="{{ request.locale.iso_code }}">
 <head>
-{% include 'booster-seo' %}
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -64,10 +63,10 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       {%- endunless -%}
     {%- endif -%}
   {%- endcapture -%}
-  {% comment %}<title>{{ seo_title | strip }}</title>{% endcomment %}
+  <title>{{ seo_title | strip }}</title>
 
   {%- if page_description -%}
-    {% comment %}<meta name="description" content="{{ page_description | escape }}">{% endcomment %}
+    <meta name="description" content="{{ page_description | escape }}">
   {%- endif -%}
 
   <script>

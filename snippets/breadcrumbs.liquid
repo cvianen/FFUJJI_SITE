@@ -40,7 +40,7 @@
             <li>
               <a class="block py-theme-half" href="{{ product.url }}" aria-current="page">{{ product.title }}</a>
             </li>
-          {%- when 'collection' and collection.handle -%}
+          {%- when 'collection' -%}
             {%- if current_tags -%}
               <li class="mx-2">
                 <span class="block py-theme-half" aria-hidden="true">{{ separator }}</span>
@@ -112,3 +112,13 @@
   </div>
 </section>
 {%- endunless -%}
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: "{%- when 'collection' and collection.handle -%}"
+  to: "{%- when 'collection' -%}"
+  position: 2397..2422
+{% endcomment %}

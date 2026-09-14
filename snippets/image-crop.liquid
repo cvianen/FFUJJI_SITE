@@ -2,9 +2,7 @@
 Displays a cropped image if a ratio is passed, or an uncropped one if crop == 'none'.
 {% endcomment %}
 {%- if crop == 'none' or ratio == 0 -%}
-  {% render 'responsive-image' with
-    image: image
-  %}
+  {% render 'responsive-image' with image, image: image %}
 {%- else -%}
   <div class="gallery-image-cropped relative w-full"
     style="padding-top:{{ 1 | divided_by: ratio | times: 100 }}%;">
@@ -17,3 +15,13 @@ Displays a cropped image if a ratio is passed, or an uncropped one if crop == 'n
     </div>
   </div>
 {%- endif -%}
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: "{% render 'responsive-image' with\r\n    image: image\r\n  %}"
+  to: "{% render 'responsive-image' with image, image: image %}"
+  position: 163..219
+{% endcomment %}

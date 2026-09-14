@@ -24,15 +24,7 @@
           assign direction = section.settings.direction
           assign repeat_text = section.settings.repeat_text 
         -%}
-        {% render 'marquee' with
-          id: section.id
-          speed_number: speed_number,
-          link: link,
-          text: text,
-          section_color: section_color,
-          direction: direction,
-          repeat_text: repeat_text
-        %}
+        {% render 'marquee' with id, id: section.id, speed_number: speed_number, link: link, text: text, section_color: section_color, direction: direction, repeat_text: repeat_text %}
       </div>
     {%- endif -%}
   {%- endif -%}
@@ -120,3 +112,24 @@
     ]
   }
 {% endschema %}
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: |-
+    {% render 'marquee' with
+              id: section.id
+              speed_number: speed_number,
+              link: link,
+              text: text,
+              section_color: section_color,
+              direction: direction,
+              repeat_text: repeat_text
+            %}
+  to: "{% render 'marquee' with id, id: section.id, speed_number: speed_number, link:
+    link, text: text, section_color: section_color, direction: direction, repeat_text:
+    repeat_text %}"
+  position: 1119..1295
+{% endcomment %}

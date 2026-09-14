@@ -85,10 +85,7 @@
           <div class="gallery-image-cropped relative"
             style="padding-top:{{ 1 | divided_by: ratio | times: 100 }}%;">
             {%- if product.featured_image != blank -%}
-            {%- render 'image-object' with
-              image: product.featured_image,
-              contain: true
-            -%}
+            {%- render 'image-object' with image, image: product.featured_image, contain: true -%}
             {%- else -%}
               {%- assign placeholder_svg_tag = 'placeholder-svg placeholder-svg--no-border bg-placeholder-bg' -%}
               <span class="absolute top-0 left-0 right-0 bottom-0 text-text">{{ 'image' | placeholder_svg_tag: placeholder_svg_tag }}</span>
@@ -96,9 +93,7 @@
           </div>
         {%- else -%}
           {%- if product.featured_image != blank -%}
-            {%- render 'responsive-image' with
-              image: product.featured_image
-            -%}
+            {%- render 'responsive-image' with image, image: product.featured_image -%}
           {%- else -%}
             {%- assign placeholder_svg_tag = 'placeholder-svg placeholder-svg--no-border bg-placeholder-bg' -%}
             {{ 'image' | placeholder_svg_tag: placeholder_svg_tag }}
@@ -267,3 +262,24 @@
   {%- endif -%}
 
 </div>
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: |-
+    {%- render 'image-object' with
+                  image: product.featured_image,
+                  contain: true
+                -%}
+  to: "{%- render 'image-object' with image, image: product.featured_image, contain:
+    true -%}"
+  position: 4909..4995
+- from: |-
+    {%- render 'responsive-image' with
+                  image: product.featured_image
+                -%}
+  to: "{%- render 'responsive-image' with image, image: product.featured_image -%}"
+  position: 5405..5480
+{% endcomment %}

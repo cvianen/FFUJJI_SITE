@@ -71,7 +71,7 @@
             {%- endif -%}
             {%- if image != blank -%}
               <div x-cloak class="hidden lg:block js-enabled fixed left-1/2 top-1/2 w-third-screen transform -translate-y-1/2 -translate-x-1/2 pointer-events-none z-10" x-show.transition.opacity.duration.200ms="current_link == '{{ link.title | handleize }}'">
-                  {% render 'responsive-image' with image: image, no_background: true %}
+                  {% render 'responsive-image' with image, image: image, no_background: true %}
               </div>
             {%- endif -%}
           </li>
@@ -195,3 +195,14 @@
     ]
   }
 {% endschema %}
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: "{% render 'responsive-image' with image: image, no_background: true %}"
+  to: "{% render 'responsive-image' with image, image: image, no_background: true
+    %}"
+  position: 4143..4220
+{% endcomment %}

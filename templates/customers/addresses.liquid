@@ -324,7 +324,7 @@
     {% endfor %}
 
     {% if paginate.pages > 1 %}
-      {% render 'pagination' with paginate: paginate, section_color: 'primary' %}
+      {% render 'pagination' with paginate, paginate: paginate, section_color: 'primary' %}
     {% endif %}
   </div>
 {% endpaginate %}
@@ -413,3 +413,15 @@
     customerAddressForm();
   });
 </script>
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: "{% render 'pagination' with paginate: paginate, section_color: 'primary'
+    %}"
+  to: "{% render 'pagination' with paginate, paginate: paginate, section_color: 'primary'
+    %}"
+  position: 14327..14412
+{% endcomment %}

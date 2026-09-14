@@ -176,7 +176,7 @@
       {% if section.settings.show_social %}
         {% assign social_style = settings.social_style %}
         <div class="section-x-padding my-8">
-          {% render 'social-icons' with social_style: social_style, link_class: 'py-1', section_color: section_color %}
+          {% render 'social-icons' with social_style, social_style: social_style, link_class: 'py-1', section_color: section_color %}
         </div>
       {% endif %}
     </div>
@@ -282,3 +282,15 @@
     ]
   }
 {% endschema %}
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: "{% render 'social-icons' with social_style: social_style, link_class: 'py-1',
+    section_color: section_color %}"
+  to: "{% render 'social-icons' with social_style, social_style: social_style, link_class:
+    'py-1', section_color: section_color %}"
+  position: 9607..9730
+{% endcomment %}

@@ -102,10 +102,7 @@
     {%- if article.image != blank -%}
     <div class="lg:col-span-12 relative full-h bg-scheme-background {% unless settings.fill_image_to_border_edge %}p-2 lg:p-4{% endunless %} {% unless image_width_desktop == 'full' %}lg:hidden{% endunless %}">
       <div class="relative {% if indent_image %}p-8 lg:p-16{% endif %}">
-        {% render 'image-crop' with
-          image: article.image,
-          ratio: ratio
-        %}
+        {% render 'image-crop' with image, image: article.image, ratio: ratio %}
       </div>
     </div>
     {%- endif -%}
@@ -224,11 +221,7 @@
       {%- if article.image != blank and image_width_desktop != 'full' -%}
       <div class="hidden lg:block {% if show_author or show_date or show_tags_and_tags_present %}border-b-grid border-grid-color{% endif %} relative full-h bg-scheme-background {% unless settings.fill_image_to_border_edge %}p-2 lg:p-4{% endunless %} lg:-mb-theme-width">
         <div class="relative {% if indent_image %}p-8 lg:p-16{% endif %}">
-          {% render 'image-crop' with
-            image: article.image,
-            ratio: ratio,
-            crop: section.settings.crop
-          %}
+          {% render 'image-crop' with image, image: article.image, ratio: ratio, crop: section.settings.crop %}
         </div>
       </div>
       {%- endif -%}
@@ -410,3 +403,26 @@
     ]
   }
 {% endschema %}
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: |-
+    {% render 'image-crop' with
+              image: article.image,
+              ratio: ratio
+            %}
+  to: "{% render 'image-crop' with image, image: article.image, ratio: ratio %}"
+  position: 4579..4651
+- from: |-
+    {% render 'image-crop' with
+                image: article.image,
+                ratio: ratio,
+                crop: section.settings.crop
+              %}
+  to: "{% render 'image-crop' with image, image: article.image, ratio: ratio, crop:
+    section.settings.crop %}"
+  position: 11079..11180
+{% endcomment %}

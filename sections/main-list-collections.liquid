@@ -63,14 +63,9 @@
               <div class="w-full relative">
                 {% if collection.image != blank or collection.products.first != blank %}
                   {%- assign image = collection.image | default: collection.products.first.featured_image -%}
-                  {% render 'image-crop' with
-                    image: image,
-                    ratio: ratio
-                  %}
+                  {% render 'image-crop' with image, image: image, ratio: ratio %}
                 {%- else -%}
-                  {% render 'placeholder-crop' with
-                    ratio: ratio
-                  %}
+                  {% render 'placeholder-crop' with ratio, ratio: ratio %}
                 {%- endif -%}
               </div>
             </div>
@@ -127,14 +122,9 @@
               <div class="w-full relative">
                 {% if collection.image != blank or collection.products.first != blank %}
                   {%- assign image = collection.image | default: collection.products.first.featured_image -%}
-                  {% render 'image-crop' with
-                    image: image,
-                    ratio: ratio
-                  %}
+                  {% render 'image-crop' with image, image: image, ratio: ratio %}
                 {%- else -%}
-                  {% render 'placeholder-crop' with
-                    ratio: ratio
-                  %}
+                  {% render 'placeholder-crop' with ratio, ratio: ratio %}
                 {%- endif -%}
               </div>
             </div>
@@ -165,7 +155,7 @@
     </ul>
 
     {% if paginate.pages > 1 %}
-      {% render 'pagination' with paginate: paginate, section_color: section_color %}
+      {% render 'pagination' with paginate, paginate: paginate, section_color: section_color %}
     {% endif %}
     {% endpaginate %}
   {%- endif -%}
@@ -354,3 +344,41 @@
   ]
 }
 {% endschema %}
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: |-
+    {% render 'image-crop' with
+                        image: image,
+                        ratio: ratio
+                      %}
+  to: "{% render 'image-crop' with image, image: image, ratio: ratio %}"
+  position: 2807..2871
+- from: |-
+    {% render 'placeholder-crop' with
+                        ratio: ratio
+                      %}
+  to: "{% render 'placeholder-crop' with ratio, ratio: ratio %}"
+  position: 2919..2975
+- from: |-
+    {% render 'image-crop' with
+                        image: image,
+                        ratio: ratio
+                      %}
+  to: "{% render 'image-crop' with image, image: image, ratio: ratio %}"
+  position: 5812..5876
+- from: |-
+    {% render 'placeholder-crop' with
+                        ratio: ratio
+                      %}
+  to: "{% render 'placeholder-crop' with ratio, ratio: ratio %}"
+  position: 5924..5980
+- from: "{% render 'pagination' with paginate: paginate, section_color: section_color
+    %}"
+  to: "{% render 'pagination' with paginate, paginate: paginate, section_color: section_color
+    %}"
+  position: 7346..7435
+{% endcomment %}

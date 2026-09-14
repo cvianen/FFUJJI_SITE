@@ -437,7 +437,7 @@
         {%- assign _content = h3_parts[1] -%}
         {%- if _heading != blank -%}
           {%- assign _tab_id = 'desc-tab-' | append: forloop.index | append: '-' | append: product.id -%}
-          {%- render 'product-tab-metafield', tab_heading: _heading, tab_content: _content, tab_id: _tab_id, tab_counter: tab_counter, is_last: tab_counter == last_tab_index -%}
+          {%- render 'product-tab-metafield', tab_heading: _heading, tab_content: _content, tab_id: _tab_id, tab_counter: tab_counter, is_last: tab_counter -%}
           {%- assign tab_counter = tab_counter | plus: 1 -%}
         {%- endif -%}
       {%- endfor -%}
@@ -459,11 +459,7 @@
     {%- when 'richtext' -%}
       {% render 'product-block-richtext', block: block %}
     {%- when 'collapsible_tab' -%}
-      {% render 'product-block-collapsible-tab',
-        block: block,
-        tab_counter: tab_counter,
-        is_last: tab_counter == last_tab_index
-      %}
+      {% render 'product-block-collapsible-tab', block: block, tab_counter: tab_counter, is_last: tab_counter %}
       {%- assign tab_counter = tab_counter | plus: 1 -%}
     {%- when 'icon_list' -%}
       {% render 'product-block-icon-list',
@@ -493,4 +489,25 @@
         section_color: section_color
       %}
   {%- endcase -%}
-{%- endfor -%}
+{%- endfor -%}{%- comment -%}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: "{%- render 'product-tab-metafield', tab_heading: _heading, tab_content: _content,
+    tab_id: _tab_id, tab_counter: tab_counter, is_last: tab_counter == last_tab_index
+    -%}"
+  to: "{%- render 'product-tab-metafield', tab_heading: _heading, tab_content: _content,
+    tab_id: _tab_id, tab_counter: tab_counter, is_last: tab_counter -%}"
+  position: 23809..23958
+- from: |-
+    {% render 'product-block-collapsible-tab',
+            block: block,
+            tab_counter: tab_counter,
+            is_last: tab_counter == last_tab_index
+          %}
+  to: "{% render 'product-block-collapsible-tab', block: block, tab_counter: tab_counter,
+    is_last: tab_counter %}"
+  position: 24750..24856
+{%- endcomment -%}

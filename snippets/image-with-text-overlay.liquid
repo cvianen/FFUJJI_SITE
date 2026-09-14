@@ -7,14 +7,9 @@
       {% endif %}
 
       {% if height == 'full_screen' or height == 'full_height' %}
-        {% render 'image-object' with
-          image: image,
-          focal_point: image_focal_point
-        %}
+        {% render 'image-object' with image, image: image, focal_point: image_focal_point %}
       {% else %}
-        {% render 'responsive-image' with
-          image: image
-        %}
+        {% render 'responsive-image' with image, image: image %}
       {% endif %}
 
       {% if image_mobile != blank %}
@@ -25,14 +20,9 @@
       <div class="lg:hidden">
         {% assign image = image_mobile %}
         {% if height == 'full_screen' or height == 'full_height' %}
-          {% render 'image-object' with
-            image: image,
-            focal_point: image_focal_point
-          %}
+          {% render 'image-object' with image, image: image, focal_point: image_focal_point %}
         {% else %}
-          {% render 'responsive-image' with
-            image: image
-          %}
+          {% render 'responsive-image' with image, image: image %}
         {% endif %}
       </div>
       {% endif %}
@@ -77,3 +67,26 @@
     </div>
   </div>
 </div>
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: "{% render 'image-object' with\r\n          image: image,\r\n          focal_point:
+    image_focal_point\r\n        %}"
+  to: "{% render 'image-object' with image, image: image, focal_point: image_focal_point
+    %}"
+  position: 754..838
+- from: "{% render 'responsive-image' with\r\n          image: image\r\n        %}"
+  to: "{% render 'responsive-image' with image, image: image %}"
+  position: 866..922
+- from: "{% render 'image-object' with\r\n            image: image,\r\n            focal_point:
+    image_focal_point\r\n          %}"
+  to: "{% render 'image-object' with image, image: image, focal_point: image_focal_point
+    %}"
+  position: 1209..1293
+- from: "{% render 'responsive-image' with\r\n            image: image\r\n          %}"
+  to: "{% render 'responsive-image' with image, image: image %}"
+  position: 1325..1381
+{% endcomment %}

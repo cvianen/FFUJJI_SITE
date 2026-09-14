@@ -32,10 +32,7 @@
 {%- capture placeholder_image -%}
   <div class="bg-scheme-background {% if settings.fill_image_to_border_edge %}border-b-grid border-grid-color{% else %}p-2 lg:p-4{% endif %}" data-color-scheme="{{ section_color }}">
     <div class="relative h-full w-full bg-placeholder-bg">
-      {% render 'placeholder-crop' with
-        ratio: ratio,
-        crop: section.settings.crop
-      %}
+      {% render 'placeholder-crop' with ratio, ratio: ratio, crop: section.settings.crop %}
     </div>
   </div>
 {%- endcapture -%}
@@ -61,10 +58,7 @@
             {%- if article.image != blank -%}
               <div class="full-h bg-scheme-background {% if settings.fill_image_to_border_edge %}border-b-grid border-grid-color{% else %}pt-2 px-2 lg:pt-4 lg:px-4{% endif %}">
                 <div class="relative">
-                  {% render 'image-crop' with
-                    image: article.image,
-                    ratio: ratio
-                  %}
+                  {% render 'image-crop' with image, image: article.image, ratio: ratio %}
                 </div>
               </div>
             {%- endif -%}
@@ -141,13 +135,7 @@
     {%- endif -%}
   </ol>
 
-  {%- render 'view-all' with
-    title: section.settings.title,
-    show_link: show_view_all,
-    link_text: view_all_text,
-    link_url: blog.url,
-    section_color: section_color
-  -%}
+  {%- render 'view-all' with title, title: section.settings.title, show_link: show_view_all, link_text: view_all_text, link_url: blog.url, section_color: section_color -%}
 </section>
 
 {% schema %}
@@ -251,3 +239,37 @@
     ]
   }
 {% endschema %}
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: |-
+    {% render 'placeholder-crop' with
+            ratio: ratio,
+            crop: section.settings.crop
+          %}
+  to: "{% render 'placeholder-crop' with ratio, ratio: ratio, crop: section.settings.crop
+    %}"
+  position: 1253..1338
+- from: |-
+    {% render 'image-crop' with
+                        image: article.image,
+                        ratio: ratio
+                      %}
+  to: "{% render 'image-crop' with image, image: article.image, ratio: ratio %}"
+  position: 2466..2538
+- from: |-
+    {%- render 'view-all' with
+        title: section.settings.title,
+        show_link: show_view_all,
+        link_text: view_all_text,
+        link_url: blog.url,
+        section_color: section_color
+      -%}
+  to: "{%- render 'view-all' with title, title: section.settings.title, show_link:
+    show_view_all, link_text: view_all_text, link_url: blog.url, section_color: section_color
+    -%}"
+  position: 6049..6218
+{% endcomment %}

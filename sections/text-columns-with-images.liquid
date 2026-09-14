@@ -31,10 +31,7 @@
           <div class="bg-scheme-background {% unless settings.fill_image_to_border_edge %}pt-2 px-2 lg:pt-4 lg:px-4{% else %}border-b-grid border-grid-color{% endunless %}">
             <div class="relative">
               {%- assign image = block.settings.image -%}
-              {% render 'image-crop' with
-                image: image,
-                ratio: ratio
-              %}
+              {% render 'image-crop' with image, image: image, ratio: ratio %}
             </div>
           </div>
           {%- else -%}
@@ -206,3 +203,17 @@
     }]
   }
 {% endschema %}
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: |-
+    {% render 'image-crop' with
+                    image: image,
+                    ratio: ratio
+                  %}
+  to: "{% render 'image-crop' with image, image: image, ratio: ratio %}"
+  position: 1484..1548
+{% endcomment %}

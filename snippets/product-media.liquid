@@ -13,11 +13,7 @@
         {% if media.media_type == 'external_video' %} data-video-id="{{ media.external_id }}"{% endif %}>
     {% case media.media_type %}
       {% when 'image' %}
-        {% render 'responsive-image' with
-          image: media.image
-          image_attributes: "data-product-featured-image",
-          wrapper_attributes: "data-product-image-wrapper"
-        %}
+        {% render 'responsive-image' with image, image: media.image, image_attributes: "data-product-featured-image", wrapper_attributes: "data-product-image-wrapper" %}
         {% assign image_index = image_index | plus: 1 %}
       {% when 'external_video' or 'video' %}
         {%- assign featured_video = media -%}
@@ -30,9 +26,7 @@
                 >
                   <span class="w-8 h-8 inline-block" >{% render 'icon-play' %}</span>
                 </span>
-                {% render 'image-object' with
-                  image: featured_video.preview_image
-                %}
+                {% render 'image-object' with image, image: featured_video.preview_image %}
               </button>
             </template>
             <template x-if="enabled">
@@ -62,3 +56,26 @@
     {% endcase %}
   </div>
 </div>
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: |-
+    {% render 'responsive-image' with
+              image: media.image
+              image_attributes: "data-product-featured-image",
+              wrapper_attributes: "data-product-image-wrapper"
+            %}
+  to: '{% render ''responsive-image'' with image, image: media.image, image_attributes:
+    "data-product-featured-image", wrapper_attributes: "data-product-image-wrapper"
+    %}'
+  position: 1102..1263
+- from: |-
+    {% render 'image-object' with
+                      image: featured_video.preview_image
+                    %}
+  to: "{% render 'image-object' with image, image: featured_video.preview_image %}"
+  position: 2418..2493
+{% endcomment %}

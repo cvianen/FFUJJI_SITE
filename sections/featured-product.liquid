@@ -55,11 +55,7 @@
                       {% if media.media_type == 'external_video' %} data-video-id="{{ media.external_id }}"{% endif %}>
                   {% case media.media_type %}
                     {% when 'image' %}
-                      {% render 'responsive-image' with
-                        image: media.image,
-                        image_attributes: "data-product-featured-image",
-                        wrapper_attributes: "data-product-image-wrapper"
-                      %}
+                      {% render 'responsive-image' with image, image: media.image, image_attributes: "data-product-featured-image", wrapper_attributes: "data-product-image-wrapper" %}
                     {% when 'external_video' %}
                       <div class="relative" style="padding-top: {{ 1 | divided_by: media.aspect_ratio | times: 100 }}%;" >
                         <div class="absolute top-0 left-0 w-full h-full">
@@ -844,3 +840,20 @@
     "templates": ["404", "article", "blog", "collection", "list-collections", "page", "password","product","search", "index"]
   }
 {% endschema %}
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: |-
+    {% render 'responsive-image' with
+                            image: media.image,
+                            image_attributes: "data-product-featured-image",
+                            wrapper_attributes: "data-product-image-wrapper"
+                          %}
+  to: '{% render ''responsive-image'' with image, image: media.image, image_attributes:
+    "data-product-featured-image", wrapper_attributes: "data-product-image-wrapper"
+    %}'
+  position: 3942..4103
+{% endcomment %}

@@ -44,9 +44,7 @@
   {%- if video_type == 'youtube' -%}
     <div id="player-{{ component_id }}"></div>
     {%- if fallback_image -%}
-    {%- render 'image-object' with
-        image: fallback_image
-    -%}
+    {%- render 'image-object' with image, image: fallback_image -%}
     {%- endif -%}
   {%- endif -%}
 
@@ -56,12 +54,28 @@
     <source src="{{ video }}" type="video/mp4">
     {% comment %}theme-check-enable RemoteAsset{% endcomment %}
       {%- if fallback_image -%}
-      {%- render 'image-object' with
-          image: fallback_image
-      -%}
+      {%- render 'image-object' with image, image: fallback_image -%}
       {%- endif -%}
       Sorry, your browser doesn't support embedded videos.
   </video>
   {%- endif -%}
   
-</div>
+</div>{%- comment -%}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: |-
+    {%- render 'image-object' with
+            image: fallback_image
+        -%}
+  to: "{%- render 'image-object' with image, image: fallback_image -%}"
+  position: 1380..1443
+- from: |-
+    {%- render 'image-object' with
+              image: fallback_image
+          -%}
+  to: "{%- render 'image-object' with image, image: fallback_image -%}"
+  position: 1849..1912
+{%- endcomment -%}

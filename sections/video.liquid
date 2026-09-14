@@ -26,9 +26,7 @@
               </span>
             </div>
             {%- if section.settings.cover_image != blank -%}
-              {% render 'image-object' with
-                image: section.settings.cover_image
-              %}
+              {% render 'image-object' with image, image: section.settings.cover_image %}
             {%- else -%}
               <div class="bg-placeholder-bg absolute top-0 left-0 right-0 bottom-0">
                 {{ 'collection-2' | placeholder_svg_tag: 'placeholder-svg placeholder' }}
@@ -111,3 +109,16 @@
     }]
   }
 {% endschema %}
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: |-
+    {% render 'image-object' with
+                    image: section.settings.cover_image
+                  %}
+  to: "{% render 'image-object' with image, image: section.settings.cover_image %}"
+  position: 1734..1809
+{% endcomment %}

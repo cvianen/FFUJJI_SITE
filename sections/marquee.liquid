@@ -10,17 +10,7 @@
 %}
 
 <section class="border-t-grid border-grid-color">
-  {% render 'marquee' with
-    id: section.id
-    text_size_class: text_size_class,
-    speed_number: speed_number,
-    link: link,
-    text: text,
-    font: font,
-    section_color: section_color,
-    direction: direction,
-    repeat_text: repeat_text
-  %}
+  {% render 'marquee' with id, id: section.id, text_size_class: text_size_class, speed_number: speed_number, link: link, text: text, font: font, section_color: section_color, direction: direction, repeat_text: repeat_text %}
 </section>
 
 {% schema %}
@@ -123,3 +113,26 @@
     }]
   }
 {% endschema %}
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: |-
+    {% render 'marquee' with
+        id: section.id
+        text_size_class: text_size_class,
+        speed_number: speed_number,
+        link: link,
+        text: text,
+        font: font,
+        section_color: section_color,
+        direction: direction,
+        repeat_text: repeat_text
+      %}
+  to: "{% render 'marquee' with id, id: section.id, text_size_class: text_size_class,
+    speed_number: speed_number, link: link, text: text, font: font, section_color:
+    section_color, direction: direction, repeat_text: repeat_text %}"
+  position: 454..676
+{% endcomment %}

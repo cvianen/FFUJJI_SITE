@@ -18,10 +18,7 @@
           <a href="{{ block.settings.link }}" class="block">
           {%- endif -%} 
             <div class="relative" style="padding-top: 100%;">
-              {% render 'image-object' with
-                image: block.settings.image,
-                contain: true
-              %}
+              {% render 'image-object' with image, image: block.settings.image, contain: true %}
             </div>
           {%- if block.settings.link != blank -%}
           </a>
@@ -124,3 +121,18 @@
   ]
   }
 {% endschema %}
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: |-
+    {% render 'image-object' with
+                    image: block.settings.image,
+                    contain: true
+                  %}
+  to: "{% render 'image-object' with image, image: block.settings.image, contain:
+    true %}"
+  position: 1037..1119
+{% endcomment %}

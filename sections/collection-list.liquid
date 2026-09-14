@@ -57,16 +57,9 @@
             <div class="w-full relative" data-color-scheme="{{ section_color }}">
               {% if collection.image != blank or collection.products.first != blank %}
                 {%- assign image = collection.image | default: collection.products.first.featured_image -%}
-                  {% render 'image-crop' with
-                    image: image,
-                    ratio: ratio,
-                    crop: section.settings.crop
-                  %}
+                  {% render 'image-crop' with image, image: image, ratio: ratio, crop: section.settings.crop %}
               {%- else -%}
-                {% render 'placeholder-crop' with
-                  ratio: ratio,
-                  crop: section.settings.crop
-                %}
+                {% render 'placeholder-crop' with ratio, ratio: ratio, crop: section.settings.crop %}
               {%- endif -%}
             </div>
           </div>
@@ -237,3 +230,27 @@
     ]
   }
 {% endschema %}
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: |-
+    {% render 'image-crop' with
+                        image: image,
+                        ratio: ratio,
+                        crop: section.settings.crop
+                      %}
+  to: "{% render 'image-crop' with image, image: image, ratio: ratio, crop: section.settings.crop
+    %}"
+  position: 2556..2649
+- from: |-
+    {% render 'placeholder-crop' with
+                      ratio: ratio,
+                      crop: section.settings.crop
+                    %}
+  to: "{% render 'placeholder-crop' with ratio, ratio: ratio, crop: section.settings.crop
+    %}"
+  position: 2693..2778
+{% endcomment %}

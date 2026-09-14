@@ -300,10 +300,7 @@
                     <div class="relative section-x-padding py-theme bg-scheme-background text-scheme-text flex justify-star items-center">
                       {%- if article.image != blank -%}
                         <div class="w-16 mr-4">
-                          {% render 'image-crop' with
-                            image: article.image,
-                            ratio: 1
-                          %}
+                          {% render 'image-crop' with image, image: article.image, ratio: 1 %}
                         </div>
                       {%- endif -%}
                       <div>
@@ -344,7 +341,7 @@
   {% endif %}
 
   {% if paginate.pages > 1 %}
-    {% render 'pagination' with paginate: paginate, section_color: 'primary' %}
+    {% render 'pagination' with paginate, paginate: paginate, section_color: 'primary' %}
   {% endif %}
 
 </div>
@@ -372,3 +369,22 @@
     ]
   }
 {% endschema %}
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: |-
+    {% render 'image-crop' with
+                                image: article.image,
+                                ratio: 1
+                              %}
+  to: "{% render 'image-crop' with image, image: article.image, ratio: 1 %}"
+  position: 19190..19258
+- from: "{% render 'pagination' with paginate: paginate, section_color: 'primary'
+    %}"
+  to: "{% render 'pagination' with paginate, paginate: paginate, section_color: 'primary'
+    %}"
+  position: 20950..21035
+{% endcomment %}

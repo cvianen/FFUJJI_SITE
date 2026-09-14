@@ -42,15 +42,13 @@
         {%- assign image = section.settings.image -%}
         {%- if fill_image -%}
           <div class="hidden lg:block">
-            {% render 'image-object' with
-              image: image
-            %}
+            {% render 'image-object' with image, image: image %}
           </div>
           <div class="block lg:hidden">
-            {% render 'responsive-image' with image: image %}
+            {% render 'responsive-image' with image, image: image %}
           </div>
         {%- else -%}
-          {% render 'responsive-image' with image: image %}
+          {% render 'responsive-image' with image, image: image %}
         {%- endif -%}
       {%- else -%}
         <div class="bg-placeholder-bg">
@@ -292,3 +290,22 @@
     ]
   }
 {% endschema %}
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: |-
+    {% render 'image-object' with
+                  image: image
+                %}
+  to: "{% render 'image-object' with image, image: image %}"
+  position: 2159..2211
+- from: "{% render 'responsive-image' with image: image %}"
+  to: "{% render 'responsive-image' with image, image: image %}"
+  position: 2281..2337
+- from: "{% render 'responsive-image' with image: image %}"
+  to: "{% render 'responsive-image' with image, image: image %}"
+  position: 2386..2442
+{% endcomment %}

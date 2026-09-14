@@ -41,16 +41,12 @@
             {%- if product.featured_image != blank and product_image_display == 'show' -%}
               <div class="relative  {% if settings.fill_image_to_border_edge %}w-16 border-r-grid border-grid-color{% else %}w-16 {% if text_size contains 'xl' %}lg:w-24{% endif %} pl-2 py-2 lg:pl-4{% endif %}">
                 <div class="block lg:hidden w-full h-full relative" style="padding-top:100%;">
-                  {%- render 'image-object' with
-                    image: product.featured_image
-                  -%}
+                  {%- render 'image-object' with image, image: product.featured_image -%}
                 </div>
                 <div class="hidden lg:block  w-full h-full relative">
                   <div class="gallery-image-cropped relative"
                     style="padding-top:100%;">
-                    {%- render 'image-object' with
-                      image: product.featured_image
-                    -%}
+                    {%- render 'image-object' with image, image: product.featured_image -%}
                   </div>
                 </div>
               </div>
@@ -108,9 +104,7 @@
             <div class="flex justify-between items-stretch w-full">
               {%- if product_image_display == 'show' -%}
                 <div class="relative  {% if settings.fill_image_to_border_edge %}w-16 border-r-grid border-grid-color{% else %}w-16 {% if text_size contains 'xl' %}lg:w-24{% endif %} pl-2 py-2{% endif %}">
-                  {% render 'placeholder-crop' with
-                    ratio: 1
-                  %}
+                  {% render 'placeholder-crop' with ratio, ratio: 1 %}
                 </div>
               {%- endif -%}
 
@@ -134,22 +128,13 @@
     {%- for product in collection.products limit: section.settings.product_limit -%}
       {%- if product.featured_image != blank -%}
           <div x-cloak class="hidden lg:block fixed left-1/2 top-1/2 w-third-screen transform -translate-y-1/2 -translate-x-1/2 pointer-events-none z-60" x-show="current_product == '{{ product.handle }}'">
-            {% render 'responsive-image' with
-              image: product.featured_image,
-              no_background: true
-            %}
+            {% render 'responsive-image' with image, image: product.featured_image, no_background: true %}
         </div>
       {%- endif -%}
     {%- endfor -%}
   {%- endif -%}
 
-  {%- render 'view-all' with
-    title: section.settings.title,
-    show_link: show_view_all,
-    link_text: view_all_text,
-    link_url: collection.url,
-    section_color: section_color
-  -%}
+  {%- render 'view-all' with title, title: section.settings.title, show_link: show_view_all, link_text: view_all_text, link_url: collection.url, section_color: section_color -%}
 </section>
 
 {% schema %}
@@ -237,3 +222,48 @@
     ]
   }
 {% endschema %}
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: |-
+    {%- render 'image-object' with
+                        image: product.featured_image
+                      -%}
+  to: "{%- render 'image-object' with image, image: product.featured_image -%}"
+  position: 2091..2162
+- from: |-
+    {%- render 'image-object' with
+                          image: product.featured_image
+                        -%}
+  to: "{%- render 'image-object' with image, image: product.featured_image -%}"
+  position: 2385..2456
+- from: |-
+    {% render 'placeholder-crop' with
+                        ratio: 1
+                      %}
+  to: "{% render 'placeholder-crop' with ratio, ratio: 1 %}"
+  position: 6229..6281
+- from: |-
+    {% render 'responsive-image' with
+                  image: product.featured_image,
+                  no_background: true
+                %}
+  to: "{% render 'responsive-image' with image, image: product.featured_image, no_background:
+    true %}"
+  position: 7350..7444
+- from: |-
+    {%- render 'view-all' with
+        title: section.settings.title,
+        show_link: show_view_all,
+        link_text: view_all_text,
+        link_url: collection.url,
+        section_color: section_color
+      -%}
+  to: "{%- render 'view-all' with title, title: section.settings.title, show_link:
+    show_view_all, link_text: view_all_text, link_url: collection.url, section_color:
+    section_color -%}"
+  position: 7518..7693
+{% endcomment %}

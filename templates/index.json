@@ -33,7 +33,7 @@
       "type": "featured-collection",
       "settings": {
         "title": "",
-        "collection": "bags",
+        "collection": "homepage",
         "grid": 2,
         "rows": 1,
         "grid_mobile": "2",
